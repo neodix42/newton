@@ -2,6 +2,10 @@ name: C/C++ CI Win
 
 on: [push]
 
+defaults:
+  run:
+    shell: cmd
+    
 jobs:
   build:
 
@@ -67,7 +71,7 @@ jobs:
           
       - name: Build GUI x64 release
         run: |
-          cmd "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat" 
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat" 
           cd gui
           qmake HAVE_QCHART=yes
           nmake release
