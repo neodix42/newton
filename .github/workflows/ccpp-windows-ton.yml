@@ -65,7 +65,7 @@ jobs:
           
       - name: build ton
         run: |
-          cd ..\ton
+          cd ton
           mkdir build
           cd build
           cmake -DCMAKE_BUILD_TYPE=Release ..
