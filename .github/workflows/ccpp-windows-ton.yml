@@ -30,14 +30,15 @@ jobs:
         with:
           repository: newton-blockchain/ton
           path: ton
+          submodules:  'recursive'
                     
       - name: dir
         run: |
           dir
                     
-      - name: cd ccpcheck
+      - name: cd cppcheck
         run: |
-          cd ccpcheck
+          cd cppcheck
 
       - name: dir
         run: |
@@ -59,10 +60,6 @@ jobs:
           dir x64\Release
           copy pcre.h ..\externals
           copy Release\pcre.lib ..\externals\pcre64.lib
-
-      - name: dir
-        run: |
-          dir
           
       - name: Install Z3 library
         run: |
@@ -74,7 +71,15 @@ jobs:
         uses: jurplel/install-qt-action@v2
         with:
           modules: 'qtcharts'
-          
+
       - name: dir
         run: |
           dir
+          
+      - name: build ton
+        run: |
+          cd ..\ton
+          mkdir build
+          cd build
+          cmake -DCMAKE_BUILD_TYPE=Release ..
+          cmake --build .
