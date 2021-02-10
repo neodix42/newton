@@ -28,7 +28,7 @@ jobs:
       - name: Check out openssl repository
         uses: actions/checkout@v2
         with:
-          repository: openssl/openssl
+          repository: openssl/openssl@OpenSSL_1_1_1-stable
           path: opensll_1_1_1-stable
 
       - name: Check out zlib repository
@@ -63,7 +63,6 @@ jobs:
       - name: compile openSSL   
         run: |  
           cd opensll_1_1_1-stable
-          git checkout OpenSSL_1_1_1-stable
           perl Configure no-shared debug-VC-WIN32
           nmake
           mkdir out32.dbg
