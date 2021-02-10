@@ -10,3 +10,8 @@ jobs:
     steps:
       - name: Check out my repository
         uses: actions/checkout@v2
+        with:
+          name: danmar/cppcheck@main
+      - name: dir
+        run: |
+          dir
