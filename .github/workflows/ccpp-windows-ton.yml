@@ -28,7 +28,7 @@ jobs:
       - name: Check out openssl repository
         uses: actions/checkout@v2
         with:
-          repository: openssl/openssl@OpenSSL_1_1_1-stable
+          repository: openssl/openssl@OpenSSL_1_1_1i
           path: opensll_1_1_1-stable
 
       - name: Check out zlib repository
