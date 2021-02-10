@@ -68,5 +68,5 @@ jobs:
           cd ton
           mkdir build
           cd build
-          cmake -DZLIB_INCLUDE_DIR=..\zlib.1.2.8_x64\include\zlib -DZLIB_LIBRARY=..\zlib.1.2.8_x64\lib\zlib\zlibstatic.lib -DOPENSSL_INCLUDE_DIR=..\openssl_1_1_1\include -DOPENSSL_CRYPTO_LIBRARY=..\openssl_1_1_1\out32\libcrypto.lib -DCMAKE_BUILD_TYPE=Release ..
+          cmake -DZLIB_INCLUDE_DIR=..\zlib.1.2.8_x64\include\zlib -DZLIB_LIBRARY=..\zlib.1.2.8_x64\lib\zlib\zlibstatic.lib -DOPENSSL_FOUND=1 -DOPENSSL_INCLUDE_DIR=..\openssl_1_1_1\include -DOPENSSL_CRYPTO_LIBRARY=..\openssl_1_1_1\out32\libcrypto.lib -DCMAKE_BUILD_TYPE=Release ..
           cmake --build .
