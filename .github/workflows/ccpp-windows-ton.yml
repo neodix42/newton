@@ -62,8 +62,9 @@ jobs:
                 
       - name: compile openSSL   
         run: |  
-          cd opensll_1_1_1-stable
+          cd opensll_1_1_1-stable        
           dir
+          git fetch
           git checkout OpenSSL_1_1_1-stable
           dir
           perl Configure no-shared debug-VC-WIN32
