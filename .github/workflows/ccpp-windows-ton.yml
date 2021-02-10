@@ -16,16 +16,33 @@ jobs:
         run: |
           systeminfo | findstr /B /C:"OS Name" /C:"OS Version"
 
-      - name: Check out my repository 1
+      - name: Check current repository
         uses: actions/checkout@v2
         
-      - name: Check out my repository 2
+      - name: Check out cppcheck repository
         uses: actions/checkout@v2
         with:
           repository: danmar/cppcheck
           path: cppcheck
+
+
+      - name: Check zlib repository
+        uses: actions/checkout@v2
+        with:
+          repository: desktop-app/zlib
+          path: zlib
+      
+      - name: Compile zlib
+        run: |
+          cd zlib\contrib\vstudio\vc14
+          msbuild zlibstat.vcxproj /property:Configuration=Debug
+          msbuild zlibstat.vcxproj /property:Configuration=ReleaseWithoutAsm          
           
-      - name: Check out my repository 3
+      - name: dir
+        run: |
+          dir
+          
+      - name: Check newton blockchain repository
         uses: actions/checkout@v2
         with:
           repository: newton-blockchain/ton
@@ -58,5 +75,5 @@ jobs:
           cd ton
           mkdir build
           cd build
-          cmake -A Win32 -DZLIB_INCLUDE_DIR=%root%\zlib.1.2.8_x64\include\zlib -DZLIB_LIBRARY=%root%\zlib.1.2.8_x64\lib\zlib\zlibstatic.lib -DOPENSSL_FOUND=1 -DOPENSSL_INCLUDE_DIR=%root%\openssl_1_1_1\include -DOPENSSL_CRYPTO_LIBRARY=%root%\openssl_1_1_1\out32\libcrypto.lib -DCMAKE_BUILD_TYPE=Release ..
+          cmake -A Win32 -DZLIB_FOUND=1 -DZLIB_INCLUDE_DIR=%root%\zlib -DZLIB_LIBRARY=%root%\zlib\contrib\vstudio\vc14\x86\ZlibStatReleaseWithoutAsm\zlibstat.lib -DOPENSSL_FOUND=1 -DOPENSSL_INCLUDE_DIR=%root%\openssl_1_1_1\include -DOPENSSL_CRYPTO_LIBRARY=%root%\openssl_1_1_1\out32\libcrypto.lib -DCMAKE_BUILD_TYPE=Release ..
           cmake --build . --config Release
