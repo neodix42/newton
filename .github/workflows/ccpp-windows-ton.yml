@@ -68,5 +68,5 @@ jobs:
           cd ton
           mkdir build
           cd build
-          cmake -DCMAKE_BUILD_TYPE=Release ..
+          cmake -DZLIB_INCLUDE_DIR=..\zlib.1.2.8_x64\include\zlib -DZLIB_LIBRARY=..\zlib.1.2.8_x64\lib\zlib\zlibstatic.lib -DCMAKE_BUILD_TYPE=Release ..
           cmake --build .
