@@ -59,9 +59,10 @@ jobs:
           msbuild zlibstat.vcxproj /property:Configuration=Debug
           msbuild zlibstat.vcxproj /property:Configuration=ReleaseWithoutAsm          
           
-      - name: dir
+      - name: Install OpenSSL
         run: |
-          dir
+          curl -o openssl.msi https://slproweb.com/download/Win64OpenSSL-1_1_1i.msi
+          msiexec /i openssl.msi /quiet /qn /norestart
           
       - name: build ton
         run: |
@@ -70,5 +71,5 @@ jobs:
           cd ton
           mkdir build
           cd build
-          cmake -A Win32 -DZLIB_FOUND=1 -DZLIB_INCLUDE_DIR=%root%\zlib -DZLIB_LIBRARY=%root%\zlib\contrib\vstudio\vc14\x86\ZlibStatReleaseWithoutAsm\zlibstat.lib -DOPENSSL_FOUND=1 -DOPENSSL_INCLUDE_DIR=%root%\opensll_1_1_1-stable\include -DOPENSSL_CRYPTO_LIBRARY=%root%\opensll_1_1_1-stable\out32\libcrypto.lib -DCMAKE_BUILD_TYPE=Release ..
-          cmake --build . --config Release
+          cmake -A -DZLIB_FOUND=1 -DZLIB_INCLUDE_DIR=%root%\zlib.1.2.8_x64\include\zlib  -DZLIB_LIBRARY=%root%\zlib.1.2.8_x64\lib\zlib\zlibstatic.lib -DCMAKE_BUILD_TYPE=Release ..
+          cmake --build .
