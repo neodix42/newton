@@ -66,8 +66,9 @@ jobs:
       - name: build ton
         run: |
           set root=%cd%
+          echo %root%
           cd ton
           mkdir build
           cd build
-          cmake -DZLIB_INCLUDE_DIR=..\zlib.1.2.8_x64\include\zlib -DZLIB_LIBRARY=..\zlib.1.2.8_x64\lib\zlib\zlibstatic.lib -DOPENSSL_FOUND=1 -DOPENSSL_INCLUDE_DIR=%root%\openssl_1_1_1\include -DOPENSSL_CRYPTO_LIBRARY=%root%\openssl_1_1_1\out32\libcrypto.lib -DCMAKE_BUILD_TYPE=Release ..
-          cmake --build .
+          cmake -DZLIB_INCLUDE_DIR=%root%\zlib.1.2.8_x64\include\zlib -DZLIB_LIBRARY=%root%\zlib.1.2.8_x64\lib\zlib\zlibstatic.lib -DOPENSSL_FOUND=1 -DOPENSSL_INCLUDE_DIR=%root%\openssl_1_1_1\include -DOPENSSL_CRYPTO_LIBRARY=%root%\openssl_1_1_1\out32\libcrypto.lib -DCMAKE_BUILD_TYPE=Release ..
+          cmake --build . --config Release
