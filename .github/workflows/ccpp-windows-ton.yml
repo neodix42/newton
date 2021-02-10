@@ -31,16 +31,6 @@ jobs:
         with:
           repository: desktop-app/zlib
           path: zlib
-      
-      - name: Compile zlib
-        run: |
-          cd zlib\contrib\vstudio\vc14
-          msbuild zlibstat.vcxproj /property:Configuration=Debug
-          msbuild zlibstat.vcxproj /property:Configuration=ReleaseWithoutAsm          
-          
-      - name: dir
-        run: |
-          dir
           
       - name: Check newton blockchain repository
         uses: actions/checkout@v2
@@ -64,6 +54,13 @@ jobs:
       - name: Setup msbuild.exe
         uses: microsoft/setup-msbuild@v1.0.2
                             
+      
+      - name: Compile zlib
+        run: |
+          cd zlib\contrib\vstudio\vc14
+          msbuild zlibstat.vcxproj /property:Configuration=Debug
+          msbuild zlibstat.vcxproj /property:Configuration=ReleaseWithoutAsm          
+          
       - name: dir
         run: |
           dir
