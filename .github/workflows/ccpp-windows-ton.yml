@@ -70,5 +70,5 @@ jobs:
           cd ton
           mkdir build
           cd build
-          cmake -A Win32 -DZLIB_FOUND=1 -DZLIB_INCLUDE_DIR=%root%\zlib -DZLIB_LIBRARY=%root%\zlib\contrib\vstudio\vc14\x86\ZlibStatReleaseWithoutAsm\zlibstat.lib -DOPENSSL_FOUND=1 -DOPENSSL_INCLUDE_DIR=%root%\opensll_1_1_1-stable\include -DOPENSSL_CRYPTO_LIBRARY=%root%\opensll_1_1_1-stable\out32\libcrypto.lib -DCMAKE_CXX_FLAGS_RELEASE="/DZLIB_WINAPI /MT /Ob2" -DCMAKE_C_FLAGS_RELEASE="/MT /Ob2" -DCMAKE_EXE_LINKER_FLAGS="/SAFESEH:NO Ws2_32.lib Gdi32.lib Advapi32.lib Crypt32.lib User32.lib" -DCMAKE_BUILD_TYPE=Release ..
+          cmake -A Win32 -DZLIB_FOUND=1 -DZLIB_INCLUDE_DIR=%root%\zlib -DZLIB_LIBRARY=%root%\zlib\contrib\vstudio\vc14\x86\ZlibStatReleaseWithoutAsm\zlibstat.lib -DOPENSSL_FOUND=1 -DOPENSSL_INCLUDE_DIR=%root%\opensll_1_1_1-stable\include -DOPENSSL_CRYPTO_LIBRARY=%root%\opensll_1_1_1-stable\out32\libcrypto.lib -DCMAKE_BUILD_TYPE=Release ..
           cmake --build . --config Release
