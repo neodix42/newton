@@ -16,7 +16,7 @@ jobs:
         run: |
           systeminfo | findstr /B /C:"OS Name" /C:"OS Version"
 
-      - name: Check current repository
+      - name: Check out current repository
         uses: actions/checkout@v2
         
       - name: Check out cppcheck repository
@@ -25,14 +25,19 @@ jobs:
           repository: danmar/cppcheck
           path: cppcheck
 
+      - name: Check out openssl repository
+        uses: actions/checkout@v2
+        with:
+          repository: openssl/openssl
+          path: opensll_1_1_1-stable
 
-      - name: Check zlib repository
+      - name: Check out zlib repository
         uses: actions/checkout@v2
         with:
           repository: desktop-app/zlib
           path: zlib
           
-      - name: Check newton blockchain repository
+      - name: Check out newton blockchain repository
         uses: actions/checkout@v2
         with:
           repository: newton-blockchain/ton
@@ -54,7 +59,26 @@ jobs:
       - name: Setup msbuild.exe
         uses: microsoft/setup-msbuild@v1.0.2
                             
-      
+                
+      - name: compile openSSL   
+        run: |  
+          cd opensll_1_1_1-stable
+          git checkout OpenSSL_1_1_1-stable
+          perl Configure no-shared debug-VC-WIN32
+          nmake
+          mkdir out32.dbg
+          move libcrypto.lib out32.dbg
+          move libssl.lib out32.dbg
+          move ossl_static.pdb out32.dbg\ossl_static
+          nmake clean
+          move out32.dbg\ossl_static out32.dbg\ossl_static.pdb
+          perl Configure no-shared VC-WIN32
+          nmake
+          mkdir out32
+          move libcrypto.lib out32
+          move libssl.lib out32
+          move ossl_static.pdb out32
+
       - name: Compile zlib
         run: |
           cd zlib\contrib\vstudio\vc14
@@ -72,5 +96,5 @@ jobs:
           cd ton
           mkdir build
           cd build
-          cmake -A Win32 -DZLIB_FOUND=1 -DZLIB_INCLUDE_DIR=%root%\zlib -DZLIB_LIBRARY=%root%\zlib\contrib\vstudio\vc14\x86\ZlibStatReleaseWithoutAsm\zlibstat.lib -DOPENSSL_FOUND=1 -DOPENSSL_INCLUDE_DIR=%root%\openssl_1_1_1\include -DOPENSSL_CRYPTO_LIBRARY=%root%\openssl_1_1_1\out32\libcrypto.lib -DCMAKE_CXX_FLAGS_RELEASE="/DZLIB_WINAPI /MT /Ob2" -DCMAKE_C_FLAGS_RELEASE="/MT /Ob2" -DCMAKE_EXE_LINKER_FLAGS="/SAFESEH:NO Ws2_32.lib Gdi32.lib Advapi32.lib Crypt32.lib User32.lib" -DCMAKE_BUILD_TYPE=Release ..
+          cmake -A Win32 -DZLIB_FOUND=1 -DZLIB_INCLUDE_DIR=%root%\zlib -DZLIB_LIBRARY=%root%\zlib\contrib\vstudio\vc14\x86\ZlibStatReleaseWithoutAsm\zlibstat.lib -DOPENSSL_FOUND=1 -DOPENSSL_INCLUDE_DIR=%root%\opensll_1_1_1-stable\include -DOPENSSL_CRYPTO_LIBRARY=%root%\opensll_1_1_1-stable\out32\libcrypto.lib -DCMAKE_CXX_FLAGS_RELEASE="/DZLIB_WINAPI /MT /Ob2" -DCMAKE_C_FLAGS_RELEASE="/MT /Ob2" -DCMAKE_EXE_LINKER_FLAGS="/SAFESEH:NO Ws2_32.lib Gdi32.lib Advapi32.lib Crypt32.lib User32.lib" -DCMAKE_BUILD_TYPE=Release ..
           cmake --build . --config Release
