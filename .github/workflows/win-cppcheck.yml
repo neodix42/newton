@@ -8,6 +8,10 @@ jobs:
     runs-on: windows-latest
 
     steps:
+      - name: Get Current OS version
+        run: |
+          systeminfo | findstr /B /C:"OS Name" /C:"OS Version"
+
       - name: Check out my repository
         uses: actions/checkout@v2
         with:
@@ -61,3 +65,27 @@ jobs:
         run: |
           dir          
           
+      - name: Build GUI x64 release
+        run: |
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat" 
+          cd gui
+          qmake HAVE_QCHART=yes
+          nmake release
+      
+      - name: Deploy GUI
+        run: |
+          windeployqt Build\gui
+          del Build\gui\cppcheck-gui.ilk
+          del Build\gui\cppcheck-gui.pdb
+          
+      - name: Build CLI x64 debug configuration using MSBuild
+        run: msbuild -m cppcheck.sln /p:Configuration=Debug-PCRE /p:Platform=x64
+
+      - name: Run Debug test
+        run: .\bin\debug\testrunner.exe
+
+      - name: Build x64 release configuration using MSBuild
+        run: msbuild -m cppcheck.sln /p:Configuration=Release-PCRE /p:Platform=x64
+
+      - name: Run Release test
+        run: .\bin\testrunner.exe
