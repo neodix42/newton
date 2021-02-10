@@ -8,6 +8,10 @@ jobs:
     runs-on: windows-latest
 
     steps:
+      - name: Check out my repository
+        uses: actions/checkout@v2
+        
+      - name: Check out danmar/cppcheck repository        
       - uses: danmar/cppcheck@main
 
       - name: Setup msbuild.exe
