@@ -29,7 +29,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: newton-blockchain/ton
-          path: .
+          path: ton
           submodules:  'recursive'
           
       - name: Setup msbuild.exe
@@ -50,19 +50,20 @@ jobs:
         run: |
           set root=%cd%
           echo %root%
+          cd ton
           mkdir build
           cd build
           cmake -DZLIB_FOUND=1 -DZLIB_INCLUDE_DIR=%root%\zlib -DZLIB_LIBRARY=%root%\zlib\contrib\vstudio\vc14\x64\ZlibStatReleaseWithoutAsm\zlibstat.lib -DCMAKE_CXX_FLAGS="/DTD_WINDOWS=1 /EHsc /bigobj /W0" -DCMAKE_BUILD_TYPE=Release ..
           
       - name: Compile ton
         run: |       
-          cd build   
+          cd ton\build   
           cmake --build .
         continue-on-error: true          
           
       - name: Show executables
         run: |
-          cd build          
+          cd ton\build          
           dir *.exe /a-D /S /B
           
       - name: Check if validator-engine.exe exists
