@@ -22,7 +22,7 @@ jobs:
         run: |
           mkdir ThirdParty
           cd ThirdParty
-          curl -o straberry.zip -LO https://strawberryperl.com/download/5.32.1.1/strawberry-perl-5.32.1.1-64bit-portable.zip
+          curl -o strawberry.zip -LO https://strawberryperl.com/download/5.32.1.1/strawberry-perl-5.32.1.1-64bit-portable.zip
           unzip strawberry.zip -d Strawberry          
           del strawberry.zip
 
@@ -50,4 +50,13 @@ jobs:
           unzip jom.zip -d jom
           del jom.zip
         
+          git clone https://github.com/desktop-app/patches.git
+          cd patches
+          git checkout 10aeaf6
+          cd ../
+          git clone https://chromium.googlesource.com/external/gyp
+          cd gyp
+          git checkout 9f2a7bb1
+          git apply ../patches/gyp.diff
+          cd ..\..
           dir
