@@ -28,7 +28,7 @@ jobs:
           curl -o install.msi https://www.python.org/ftp/python/2.7.8/python-2.7.8.amd64.msi
           msiexec /i install.msi /quiet /qn /norestart
 
-          curl -o install.msi https://github.com/Kitware/CMake/releases/download/v3.19.4/cmake-3.19.4-win64-x64.msi
+          curl -o install.msi -LO https://github.com/Kitware/CMake/releases/download/v3.19.4/cmake-3.19.4-win64-x64.msi
           msiexec /i install.msi /quiet /qn /norestart
 
           curl -o nasm.zip https://www.nasm.us/pub/nasm/releasebuilds/2.15.05/win64/nasm-2.15.05-win64.zip
@@ -37,7 +37,7 @@ jobs:
           curl -o yasm.zip http://www.tortall.net/projects/yasm/releases/vsyasm-1.3.0-win64.zip
           unzip yasm.zip
 
-          curl -o ninja.zip https://github.com/ninja-build/ninja/releases/download/v1.10.2/ninja-win.zip
+          curl -o ninja.zip -LO https://github.com/ninja-build/ninja/releases/download/v1.10.2/ninja-win.zip
           unzip ninja.zip
 
           curl -o jom.zip http://www.mirrorservice.org/sites/download.qt-project.org/official_releases/jom/jom_1_1_3.zip
