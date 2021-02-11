@@ -71,7 +71,11 @@ jobs:
           cd ton
           mkdir build
           cd build
-          cmake -DZLIB_FOUND=1 -DZLIB_INCLUDE_DIR=%root%\zlib.1.2.8_x64\include\zlib -DZLIB_LIBRARY=%root%\zlib.1.2.8_x64\lib\zlib\zlibstatic.lib -DCMAKE_CXX_FLAGS="/DTD_WINDOWS=1 /EHsc /bigobj /W0" -DCMAKE_BUILD_TYPE=Release ..
+          cmake -DZLIB_FOUND=1 -DZLIB_INCLUDE_DIR=%root%\zlib.1.2.8_x64\include\zlib -DZLIB_LIBRARY=%root%\zlib.1.2.8_x64\lib\zlib\zlibstatic.lib -DCMAKE_CXX_FLAGS="/DTD_WINDOWS=1 /bigobj /W0" -DCMAKE_BUILD_TYPE=Release ..
+          
+      - name: compile ton
+        run: |       
+          cd ton\build   
           cmake --build .
         continue-on-error: true          
           
@@ -81,10 +85,12 @@ jobs:
           cd build
           dir *.exe /a-D /S /B
           
+#      - name: Check if validator-engine.exe exists
+#        run: |
+#          copy %root%\ton\build\validator-engine\Debug\validator-engine.exe test
+          
       - name: find & copy binaries
         run: |
-          cd ton
-          cd build
           mkdir artifacts
           for /f %%a in ('dir *.exe /b /a /s') do copy /Y %%a artifacts
           
