@@ -69,6 +69,7 @@ jobs:
           
       - name: Check if validator-engine.exe exists
         run: |
+          set root=%cd%
           copy %root%\ton\build\validator-engine-console\Debug\validator-engine-console.exe test
           
       - name: Find & copy binaries
