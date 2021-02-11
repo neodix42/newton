@@ -19,12 +19,6 @@ jobs:
       - name: Check out current repository
         uses: actions/checkout@v2
         
-      - name: Check out cppcheck repository
-        uses: actions/checkout@v2
-        with:
-          repository: danmar/cppcheck
-          path: cppcheck
-
       - name: Check out zlib repository
         uses: actions/checkout@v2
         with:
@@ -38,28 +32,17 @@ jobs:
           path: ton
           submodules:  'recursive'
                              
-      - name: dir
-        run: |
-          dir
-                    
-      - name: cd cppcheck
-        run: |
-          cd cppcheck
-
-      - name: dir
-        run: |
-          dir
           
       - name: Setup msbuild.exe
         uses: microsoft/setup-msbuild@v1.0.2
                 
-      - name: Compile zlib
+      - name: Compile zlib Win64
         run: |
           cd zlib\contrib\vstudio\vc14
           msbuild zlibstat.vcxproj /p:Configuration=Debug /p:platform=x64        
           msbuild zlibstat.vcxproj /p:Configuration=ReleaseWithoutAsm /p:platform=x64
           
-      - name: Install OpenSSL
+      - name: Install OpenSSL Win64
         run: |
           curl -o openssl.msi https://slproweb.com/download/Win64OpenSSL-1_1_1i.msi
           msiexec /i openssl.msi /quiet /qn /norestart
@@ -71,7 +54,7 @@ jobs:
           cd ton
           mkdir build
           cd build
-          cmake -DZLIB_FOUND=1 -DZLIB_INCLUDE_DIR=%root%\zlib\include\zlib -DZLIB_LIBRARY=%root%\zlib\contrib\vstudio\vc14\x64\ZlibStatReleaseWithoutAsm\zlibstat.lib -DCMAKE_CXX_FLAGS="/DTD_WINDOWS=1 /bigobj /W0" -DCMAKE_BUILD_TYPE=Release ..
+          cmake -DZLIB_FOUND=1 -DZLIB_INCLUDE_DIR=%root%\zlib\include\zlib -DZLIB_LIBRARY=%root%\zlib\contrib\vstudio\vc14\x64\ZlibStatReleaseWithoutAsm\zlibstat.lib -DCMAKE_CXX_FLAGS="/DTD_WINDOWS=1 /EHsc /bigobj /W0" -DCMAKE_BUILD_TYPE=Release ..
 #          cmake -DZLIB_FOUND=1 -DZLIB_INCLUDE_DIR=%root%\zlib.1.2.8_x64\include\zlib -DZLIB_LIBRARY=%root%\zlib.1.2.8_x64\lib\zlib\zlibstatic.lib -DCMAKE_CXX_FLAGS="/DTD_WINDOWS=1 /bigobj /W0" -DCMAKE_BUILD_TYPE=Release ..
           
       - name: Compile ton
