@@ -23,7 +23,7 @@ jobs:
           mkdir ThirdParty
           cd ThirdParty
           curl -o install.msi https://strawberryperl.com/download/5.32.1.1/strawberry-perl-5.32.1.1-64bit.msi
-          msiexec /i install.msi /quiet /qn /norestart TARGETDIR="D:\a\win-cppcheck\win-cppcheck\ThirdParty\Strawberry"
+          msiexec /i install.msi /quiet /qn /norestart TARGETDIR="%cd%\Strawberry"
           del install.msi
 
           curl -o install.msi https://www.python.org/ftp/python/2.7.8/python-2.7.8.amd64.msi
@@ -51,3 +51,5 @@ jobs:
           del jom.zip
         
           dir
+          
+          tree
