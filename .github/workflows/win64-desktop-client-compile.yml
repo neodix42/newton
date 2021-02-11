@@ -37,7 +37,7 @@ jobs:
         with:
           repository: newton-blockchain/wallet-desktop
           path: wallet-desktop
-          submodule: 'recursive'
+          submodules: 'recursive'
         
       - name: Setup msbuild.exe
         uses: microsoft/setup-msbuild@v1.0.2
@@ -98,15 +98,20 @@ jobs:
           cd gyp
           git checkout 9f2a7bb1
           git apply ../patches/gyp.diff
+          cd ..
+          dir
          
       - name: Install Libraries
         run: |
+          set root=%cd%
           SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\Python27;%cd%\ThirdParty\NASM;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
-          
+          echo %PATH%
           cd Libraries
 
           SET LibrariesPath=%cd%
-          set GYP_MSVS_OVERRIDE_PATH=C:\Microsoft Visual Studio\2019\Professional
+          echo %LibrariesPath%
+          
+          set GYP_MSVS_OVERRIDE_PATH=C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise
 
           git clone https://github.com/desktop-app/patches.git
           cd patches
@@ -121,12 +126,12 @@ jobs:
           cd src
           git clone https://github.com/google/googletest testing
           cd client\windows
-          gyp --no-circular-check breakpad_client.gyp --format=ninja
+          %root%\ThirdParty\gyp\gyp.BAT --no-circular-check breakpad_client.gyp --format=ninja
           cd ..\..
-          ninja -C out/Debug common crash_generation_client exception_handler
-          ninja -C out/Release common crash_generation_client exception_handler
+          %root%\ThirdParty\Ninja\ninja.exe -C out/Debug common crash_generation_client exception_handler
+          %root%\ThirdParty\Ninja\ninja.exe -C out/Release common crash_generation_client exception_handler
           cd tools\windows\dump_syms
-          gyp dump_syms.gyp
+          %root%\ThirdParty\gyp\gyp.bat dump_syms.gyp
           msbuild dump_syms.vcxproj /property:Configuration=Release
           
           cd ..\..\..\..\..
