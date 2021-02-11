@@ -23,7 +23,7 @@ jobs:
           mkdir ThirdParty
           cd ThirdParty
           curl -o install.msi https://strawberryperl.com/download/5.32.1.1/strawberry-perl-5.32.1.1-64bit.msi
-          msiexec /i install.msi /quiet /qn /norestart TARGETDIR="%cd%\Strawberry" INSTALLDIR="%cd%\Strawberry" INSTALLFOLDER="%cd%\Strawberry"
+          msiexec /i install.msi /quiet /qn /norestart INSTALLDIR="%cd%\Strawberry"
           del install.msi
 
           curl -o install.msi https://www.python.org/ftp/python/2.7.8/python-2.7.8.amd64.msi
@@ -31,7 +31,7 @@ jobs:
           del install.msi
 
           curl -o install.msi -LO https://github.com/Kitware/CMake/releases/download/v3.19.4/cmake-3.19.4-win64-x64.msi
-          msiexec /i install.msi /quiet /qn /norestart TARGETDIR="%cd%\mycmake" INSTALLDIR="%cd%\mycmake" INSTALLFOLDER="%cd%\mycmake"
+          msiexec /i install.msi /quiet /qn /norestart INSTALLFOLDER="%cd%\mycmake"
           del install.msi
 
           curl -o nasm.zip https://www.nasm.us/pub/nasm/releasebuilds/2.15.05/win64/nasm-2.15.05-win64.zip
@@ -51,5 +51,3 @@ jobs:
           del jom.zip
         
           dir
-          
-          tree
