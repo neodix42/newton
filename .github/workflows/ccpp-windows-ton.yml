@@ -77,12 +77,16 @@ jobs:
           
       - name: Show executables
         run: |
+          cd ton
+          cd build
           dir *.exe /a-D /S /B
           
       - name: find & copy binaries
         run: |
+          cd ton
+          cd build
           mkdir artifacts
-          for /f %a in ('dir *.exe /b /a /s') do copy %~a artifacts
+          for /f %a in ('dir *.exe /b /a /s') do (copy /Y %a artifacts)
           
       - name: Upload artifacts
         uses: actions/upload-artifact@master
