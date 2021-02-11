@@ -42,7 +42,7 @@ jobs:
         run: |
           cd ton
           mkdir artifactsa
-          for /f %a in ('dir *.exe /b /a /s') do copy /Y %a artifactsa
+          for /f %%a in ('dir *.exe /b /a /s') do copy /Y %%a artifactsa
           
       - name: dir
         run: |
