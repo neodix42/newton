@@ -31,7 +31,6 @@ jobs:
           repository: newton-blockchain/ton
           path: ton
           submodules:  'recursive'
-                             
           
       - name: Setup msbuild.exe
         uses: microsoft/setup-msbuild@v1.0.2
@@ -54,7 +53,7 @@ jobs:
           cd ton
           mkdir build
           cd build
-          cmake -DZLIB_FOUND=1 -DZLIB_INCLUDE_DIR=%root%\zlib\include\zlib -DZLIB_LIBRARY=%root%\zlib\contrib\vstudio\vc14\x64\ZlibStatReleaseWithoutAsm\zlibstat.lib -DCMAKE_CXX_FLAGS="/DTD_WINDOWS=1 /EHsc /bigobj /W0" -DCMAKE_BUILD_TYPE=Release ..
+          cmake -DZLIB_FOUND=1 -DZLIB_INCLUDE_DIR=%root%\zlib -DZLIB_LIBRARY=%root%\zlib\contrib\vstudio\vc14\x64\ZlibStatReleaseWithoutAsm\zlibstat.lib -DCMAKE_CXX_FLAGS="/DTD_WINDOWS=1 /EHsc /bigobj /W0" -DCMAKE_BUILD_TYPE=Release ..
 #          cmake -DZLIB_FOUND=1 -DZLIB_INCLUDE_DIR=%root%\zlib.1.2.8_x64\include\zlib -DZLIB_LIBRARY=%root%\zlib.1.2.8_x64\lib\zlib\zlibstatic.lib -DCMAKE_CXX_FLAGS="/DTD_WINDOWS=1 /bigobj /W0" -DCMAKE_BUILD_TYPE=Release ..
           
       - name: Compile ton
