@@ -56,8 +56,8 @@ jobs:
       - name: Compile zlib
         run: |
           cd zlib\contrib\vstudio\vc14
-          msbuild zlibstat.vcxproj /p:Configuration=Debug /p:PreferredToolArchitecture=x64          
-          msbuild zlibstat.vcxproj /p:Configuration=ReleaseWithoutAsm /p:PreferredToolArchitecture=x64        
+          msbuild zlibstat.vcxproj /p:Configuration=Debug /p:platform=x64        
+          msbuild zlibstat.vcxproj /p:Configuration=ReleaseWithoutAsm /p:platform=x64
           
       - name: Install OpenSSL
         run: |
@@ -71,7 +71,7 @@ jobs:
           cd ton
           mkdir build
           cd build
-          cmake -DZLIB_FOUND=1 -DZLIB_INCLUDE_DIR=%root%\zlib\include\zlib -DZLIB_LIBRARY=%root%\zlib\contrib\vstudio\vc14\x86\ZlibStatReleaseWithoutAsm\zlibstat.lib -DCMAKE_CXX_FLAGS="/DTD_WINDOWS=1 /bigobj /W0" -DCMAKE_BUILD_TYPE=Release ..
+          cmake -DZLIB_FOUND=1 -DZLIB_INCLUDE_DIR=%root%\zlib\include\zlib -DZLIB_LIBRARY=%root%\zlib\contrib\vstudio\vc14\x64\ZlibStatReleaseWithoutAsm\zlibstat.lib -DCMAKE_CXX_FLAGS="/DTD_WINDOWS=1 /bigobj /W0" -DCMAKE_BUILD_TYPE=Release ..
 #          cmake -DZLIB_FOUND=1 -DZLIB_INCLUDE_DIR=%root%\zlib.1.2.8_x64\include\zlib -DZLIB_LIBRARY=%root%\zlib.1.2.8_x64\lib\zlib\zlibstatic.lib -DCMAKE_CXX_FLAGS="/DTD_WINDOWS=1 /bigobj /W0" -DCMAKE_BUILD_TYPE=Release ..
           
       - name: Compile ton
