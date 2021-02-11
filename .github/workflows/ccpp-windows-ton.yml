@@ -71,8 +71,9 @@ jobs:
           cd ton
           mkdir build
           cd build
-          cmake -DZLIB_FOUND=1 -DZLIB_INCLUDE_DIR=%root%\zlib.1.2.8_x64\include\zlib -DZLIB_LIBRARY=%root%\zlib.1.2.8_x64\lib\zlib\zlibstatic.lib -DCMAKE_CXX_FLAGS_RELEASE=/DTD_WINDOWS=1 -DCMAKE_BUILD_TYPE=Release ..
+          cmake -DZLIB_FOUND=1 -DZLIB_INCLUDE_DIR=%root%\zlib.1.2.8_x64\include\zlib -DZLIB_LIBRARY=%root%\zlib.1.2.8_x64\lib\zlib\zlibstatic.lib -DCMAKE_CXX_FLAGS=/DTD_WINDOWS=1 -DCMAKE_BUILD_TYPE=Release ..
           cmake --build .
+          continue-on-error: true          
           
       - name: Show executables
         run: |
