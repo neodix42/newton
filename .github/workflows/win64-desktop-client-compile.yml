@@ -113,7 +113,7 @@ jobs:
           
           
       - name: set PATH
-        run: echo "::add-path::/path/to/dir"
+        run: echo "::add-path::%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;"
     
       - name: Install Libraries
         run: |           
