@@ -120,8 +120,8 @@ jobs:
           SET LibrariesPath=%cd%
           echo %LibrariesPath%
           
-          set GYP_MSVS_OVERRIDE_PATH=C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise
-          set GYP_MSVS_VERSION=2019
+          SET GYP_MSVS_OVERRIDE_PATH=C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise
+          SET GYP_MSVS_VERSION=2019
           
           git clone https://github.com/desktop-app/patches.git
           cd patches
@@ -136,6 +136,8 @@ jobs:
           cd src
           git clone https://github.com/google/googletest testing
           cd client\windows
+          dir
+          echo %root%\ThirdParty\gyp\gyp.bat --no-circular-check breakpad_client.gyp --format=ninja
           %root%\ThirdParty\gyp\gyp.bat --no-circular-check breakpad_client.gyp --format=ninja
           cd ..\..
           %root%\ThirdParty\Ninja\ninja.exe -C out/Debug common crash_generation_client exception_handler
