@@ -2,9 +2,9 @@ name: C/C++ CI Windows x64 Desktop newton wallet compile
 
 on: [push]
 
-defaults:
-  run:
-    shell: cmd
+#defaults:
+#  run:
+#    shell: cmd
     
 jobs:
   build:
@@ -116,7 +116,7 @@ jobs:
           echo %LibrariesPath%
           
           SET GYP_MSVS_OVERRIDE_PATH=C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise
-          SET GYP_MSVS_VERSION=2019
+          SET GYP_MSVS_VERSION=2017
 
           
           git clone https://github.com/desktop-app/patches.git
