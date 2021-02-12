@@ -110,14 +110,11 @@ jobs:
           git apply ../patches/gyp.diff
           cd ..
           dir
-          
-          
-      - name: set PATH
-        run: echo "::add-path::%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;"
     
       - name: Install Libraries
         run: |           
  
+          echo "::add-path::%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;"
           echo %PATH%
           set root=%cd%
           SET PATH=%root%\ThirdParty\Strawberry\perl\bin;%root%\ThirdParty\Python27;%root%\ThirdParty\NASM;%root%\ThirdParty\jom;%root%\ThirdParty\cmake\bin;%root%\ThirdParty\yasm;%PATH%
