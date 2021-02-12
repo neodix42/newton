@@ -72,7 +72,7 @@ jobs:
         run: |
           cd ThirdParty
           curl -o strawberry.zip -LO https://strawberryperl.com/download/5.32.1.1/strawberry-perl-5.32.1.1-64bit-portable.zip
-          unzip strawberry.zip -d Strawberry          
+          unzip -qq strawberry.zip -d Strawberry          
           del strawberry.zip
 
           curl -o install.msi https://www.python.org/ftp/python/2.7.8/python-2.7.8.amd64.msi
@@ -80,7 +80,7 @@ jobs:
           del install.msi
 
           curl -o cmake.zip -LO https://github.com/Kitware/CMake/releases/download/v3.19.4/cmake-3.19.4-win64-x64.zip
-          unzip cmake.zip -d cmake   
+          unzip -qq cmake.zip -d cmake   
           del cmake.zip
 
           curl -o nasm.zip https://www.nasm.us/pub/nasm/releasebuilds/2.15.05/win64/nasm-2.15.05-win64.zip
@@ -88,15 +88,15 @@ jobs:
           del nasm.zip
 
           curl -o yasm.zip http://www.tortall.net/projects/yasm/releases/vsyasm-1.3.0-win64.zip
-          unzip yasm.zip -d yasm
+          unzip -qq yasm.zip -d yasm
           del yasm.zip
 
           curl -o ninja.zip -LO https://github.com/ninja-build/ninja/releases/download/v1.10.2/ninja-win.zip
-          unzip ninja.zip -d Ninja
+          unzip -qq ninja.zip -d Ninja
           del ninja.zip
 
           curl -o jom.zip http://www.mirrorservice.org/sites/download.qt-project.org/official_releases/jom/jom_1_1_3.zip
-          unzip jom.zip -d jom
+          unzip -qq jom.zip -d jom
           del jom.zip
         
           git clone https://github.com/desktop-app/patches.git
