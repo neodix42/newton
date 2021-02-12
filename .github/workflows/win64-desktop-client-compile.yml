@@ -110,11 +110,15 @@ jobs:
           cd ..
           dir
          
-
+          echo %root%
+          set root=%cd%
+          SET PATH=%root%\ThirdParty\Strawberry\perl\bin;%root%\ThirdParty\Python27;%root%\ThirdParty\NASM;%root%\ThirdParty\jom;%root%\ThirdParty\cmake\bin;%root%\ThirdParty\yasm;%root%\ThirdParty\gyp;%root%\ThirdParty\Ninja;%PATH%
+          echo %PATH%
     
       - name: Install Libraries
         run: |
           
+          echo %root%
           set root=%cd%
           SET PATH=%root%\ThirdParty\Strawberry\perl\bin;%root%\ThirdParty\Python27;%root%\ThirdParty\NASM;%root%\ThirdParty\jom;%root%\ThirdParty\cmake\bin;%root%\ThirdParty\yasm;%root%\ThirdParty\gyp;%root%\ThirdParty\Ninja;%PATH%
           echo %PATH%
@@ -143,7 +147,7 @@ jobs:
           dir
           
           echo %root%\ThirdParty\gyp\gyp.bat --no-circular-check breakpad_client.gyp --format=ninja
-          %root%\ThirdParty\gyp\gyp.bat --no-circular-check breakpad_client.gyp --format=ninja
+          gyp --no-circular-check breakpad_client.gyp --format=ninja
           
           cd ..\..
           echo %root%\ThirdParty\Ninja\ninja.exe -C out/Debug common crash_generation_client exception_handler
