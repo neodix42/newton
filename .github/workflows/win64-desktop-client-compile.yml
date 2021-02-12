@@ -105,9 +105,14 @@ jobs:
           cd ..
           dir
          
+      - name: Set up Visual Studio shell
+        uses: egor-tensin/vs-shell@v2
+        with:
+          arch: x64
+    
       - name: Install Libraries
         run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+          
           set root=%cd%
           SET PATH=%root%\ThirdParty\Strawberry\perl\bin;%root%\ThirdParty\Python27;%root%\ThirdParty\NASM;%root%\ThirdParty\jom;%root%\ThirdParty\cmake\bin;%root%\ThirdParty\yasm;%root%\ThirdParty\gyp;%root%\ThirdParty\Ninja;%PATH%
           echo %PATH%
