@@ -114,11 +114,15 @@ jobs:
       - name: Install Libraries
         run: |           
  
-          echo "::add-path::%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;"
-          echo %PATH%
+
           set root=%cd%
           SET PATH=%root%\ThirdParty\Strawberry\perl\bin;%root%\ThirdParty\Python27;%root%\ThirdParty\NASM;%root%\ThirdParty\jom;%root%\ThirdParty\cmake\bin;%root%\ThirdParty\yasm;%PATH%
           echo %PATH%
+          
+          echo 111111111111111111111111111111------------------------------------1111111111111111111111111111
+          echo "::add-path::%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;"
+          echo %PATH%
+          
           cd Libraries
 
           SET LibrariesPath=%cd%
