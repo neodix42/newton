@@ -61,17 +61,7 @@ jobs:
       - name: Install OpenSSL Win64
         run: |
           curl -o openssl.msi https://slproweb.com/download/Win64OpenSSL-1_1_1i.msi
-          msiexec /i openssl.msi /quiet /qn /norestart
-          
-          echo a
-          dir C:\Program Files\OpenSSL\
-          echo b
-          dir C:\Program Files\OpenSSL-Win64\
-          echo c
-          dir C:\OpenSSL-Win64\
-          echo d
-          dir C:\Program Files (x86)\OpenSSL-Win64\
-          
+          msiexec /i openssl.msi /quiet /qn /norestart          
   
       - name: Set up Visual Studio shell
         uses: egor-tensin/vs-shell@v2
@@ -180,3 +170,6 @@ jobs:
           
           configure -prefix "%LibrariesPath%\Qt-5.12.8" -debug-and-release -force-debug-info -opensource -confirm-license -static -static-runtime -no-opengl -mp -nomake examples -nomake tests
 
+         jom -j4
+         jom -j4 install
+         cd ..
