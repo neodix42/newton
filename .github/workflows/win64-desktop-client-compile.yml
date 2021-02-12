@@ -42,6 +42,13 @@ jobs:
           repository: newton-blockchain/wallet-desktop
           path: wallet-desktop
           submodules: 'recursive'
+          
+      - name: Check out newton blockchain repository
+        uses: actions/checkout@v2
+        with:
+          repository: newton-blockchain/ton
+          path: ton
+          submodules:  'recursive'       
         
       - name: Setup msbuild.exe
         uses: microsoft/setup-msbuild@v1.0.2
@@ -176,3 +183,23 @@ jobs:
           
           call jom -j4 install
           cd ..
+          
+      - name: Build ton
+        run: |
+          set root=%cd%
+          echo %root%
+          cd ton
+          mkdir build
+          cd build
+          cmake -DZLIB_FOUND=1 -DZLIB_INCLUDE_DIR=%root%\zlib -DZLIB_LIBRARY=%root%\zlib\contrib\vstudio\vc14\x64\ZlibStatReleaseWithoutAsm\zlibstat.lib -DCMAKE_CXX_FLAGS="/DTD_WINDOWS=1 /EHsc /bigobj /W0" -DCMAKE_BUILD_TYPE=Release ..
+          
+      - name: Compile ton
+        run: |
+          cd ton\build   
+          cmake --build .
+        continue-on-error: true          
+          
+      - name: Show executables
+        run: |
+          cd ton\build          
+          dir *.exe /a-D /S /B
