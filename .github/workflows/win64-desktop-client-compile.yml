@@ -2,9 +2,9 @@ name: C/C++ CI Windows x64 Desktop newton wallet compile
 
 on: [push]
 
-#defaults:
-#  run:
-#    shell: cmd
+defaults:
+   run:
+    shell: cmd
     
 jobs:
   build:
@@ -107,9 +107,9 @@ jobs:
          
       - name: Install Libraries
         run: |
-          set root=$PSScriptRoot
-          SET PATH=$Env:root\ThirdParty\Strawberry\perl\bin;$Env:root\ThirdParty\Python27;$Env:root\ThirdParty\NASM;$Env:root\ThirdParty\jom;$Env:root\ThirdParty\cmake\bin;$Env:root\ThirdParty\yasm;$Env:root\ThirdParty\gyp;$Env:root\ThirdParty\Ninja;$Env:PATH
-
+          "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+          set root=%cd%
+          SET PATH=%root%\ThirdParty\Strawberry\perl\bin;%root%\ThirdParty\Python27;%root%\ThirdParty\NASM;%root%\ThirdParty\jom;%root%\ThirdParty\cmake\bin;%root%\ThirdParty\yasm;%root%\ThirdParty\gyp;%root%\ThirdParty\Ninja;%PATH%
           echo %PATH%
           cd Libraries
 
@@ -117,8 +117,7 @@ jobs:
           echo %LibrariesPath%
           
           SET GYP_MSVS_OVERRIDE_PATH=C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise
-          SET GYP_MSVS_VERSION=2017
-
+          SET GYP_MSVS_VERSION=2017    
           
           git clone https://github.com/desktop-app/patches.git
           cd patches
