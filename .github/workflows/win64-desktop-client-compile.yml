@@ -157,7 +157,7 @@ jobs:
           
           cd tools\windows\dump_syms
           
-          gyp dump_syms.gyp
+          call gyp dump_syms.gyp
           
           msbuild dump_syms.vcxproj /property:Configuration=Release
           
