@@ -121,7 +121,7 @@ jobs:
           echo %LibrariesPath%
           
           set GYP_MSVS_OVERRIDE_PATH=C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise
-          set GYP_MSVS_VERSION=2017
+          set GYP_MSVS_VERSION=2019
           
           git clone https://github.com/desktop-app/patches.git
           cd patches
