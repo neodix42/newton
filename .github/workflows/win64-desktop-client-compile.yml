@@ -109,20 +109,12 @@ jobs:
           git apply ../patches/gyp.diff
           cd ..
           dir
-        
-          set root=%cd%
-          SET PATH=%root%\ThirdParty\Strawberry\perl\bin;%root%\ThirdParty\Python27;%root%\ThirdParty\NASM;%root%\ThirdParty\jom;%root%\ThirdParty\cmake\bin;%root%\ThirdParty\yasm;%root%\ThirdParty\gyp;%root%\ThirdParty\Ninja;%PATH%
-          echo %PATH%
     
       - name: Install Libraries
-        run: |
-          
-          
-          echo %PATH%
-          
-          echo %root%
+        run: |           
+ 
           set root=%cd%
-          SET PATH=%root%\ThirdParty\Strawberry\perl\bin;%root%\ThirdParty\Python27;%root%\ThirdParty\NASM;%root%\ThirdParty\jom;%root%\ThirdParty\cmake\bin;%root%\ThirdParty\yasm;%root%\ThirdParty\gyp;%root%\ThirdParty\Ninja;%PATH%
+          SET PATH=%root%\ThirdParty\Strawberry\perl\bin;%root%\ThirdParty\Python27;%root%\ThirdParty\NASM;%root%\ThirdParty\jom;%root%\ThirdParty\cmake\bin;%root%\ThirdParty\yasm;%PATH%
           echo %PATH%
           cd Libraries
 
@@ -161,7 +153,7 @@ jobs:
           cd tools\windows\dump_syms
           
           echo  %root%\ThirdParty\gyp\gyp.bat dump_syms.gyp
-          %root%\ThirdParty\gyp\gyp.bat dump_syms.gyp
+          gyp dump_syms.gyp
           
           echo now msbuild
           msbuild dump_syms.vcxproj /property:Configuration=Release
