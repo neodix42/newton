@@ -173,5 +173,5 @@ jobs:
           git apply ../../patches/qtbase_5_12_8.diff
           cd ..
           
-          configure -prefix "%LibrariesPath%\Qt-5.12.8" -debug-and-release -force-debug-info -opensource -confirm-license -static -static-runtime -no-opengl -openssl-linked -mp -nomake examples -nomake tests
+          configure -prefix "%LibrariesPath%\Qt-5.12.8" -debug-and-release -force-debug-info -opensource -confirm-license -static -static-runtime -no-opengl -mp -nomake examples -nomake tests
 
