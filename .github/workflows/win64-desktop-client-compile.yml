@@ -133,9 +133,10 @@ jobs:
           git clone https://github.com/google/googletest testing
           cd client\windows
           dir
+          
           echo %root%\ThirdParty\gyp\gyp.bat --no-circular-check breakpad_client.gyp --format=ninja
-          call %root%\ThirdParty\gyp\gyp.bat --no-circular-check breakpad_client.gyp --format=ninja
-          exit
+          %root%\ThirdParty\gyp\gyp.bat --no-circular-check breakpad_client.gyp --format=ninja
+          
           cd ..\..
           echo %root%\ThirdParty\Ninja\ninja.exe -C out/Debug common crash_generation_client exception_handler
           %root%\ThirdParty\Ninja\ninja.exe -C out/Debug common crash_generation_client exception_handler
