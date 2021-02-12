@@ -169,7 +169,10 @@ jobs:
           cd ..
           
           configure -prefix "%LibrariesPath%\Qt-5.12.8" -debug-and-release -force-debug-info -opensource -confirm-license -static -static-runtime -no-opengl -mp -nomake examples -nomake tests
-
-          jom -j4
-          jom -j4 install
+            
+          echo starting jom
+          
+          call jom -j4
+          
+          call jom -j4 install
           cd ..
