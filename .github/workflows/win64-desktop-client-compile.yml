@@ -203,3 +203,10 @@ jobs:
         run: |
           cd ton\build          
           dir *.exe /a-D /S /B
+          
+      - name: Configure
+        run: |
+          cd wallet-desktop\Wallet
+          call configure.bat -D DESKTOP_APP_USE_PACKAGED=OFF
+          msbuild wallet-desktop\Wallet\out\Wallet.sln /property:Configuration=Release
+     
