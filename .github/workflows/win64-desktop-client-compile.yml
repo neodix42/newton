@@ -113,8 +113,9 @@ jobs:
           cd ..
           dir
           
-          echo "::add-path::/path/to/dir"
-
+          
+      - name: set PATH
+        run: echo "::add-path::/path/to/dir"
     
       - name: Install Libraries
         run: |           
