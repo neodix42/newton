@@ -15,11 +15,15 @@ jobs:
       - name: Get Current OS version
         run: |
           systeminfo | findstr /B /C:"OS Name" /C:"OS Version"
-          mkdir ThirdParty
-          mkdir Libraries
+
       - name: Check out current repository
         uses: actions/checkout@v2
         
+      - name: Create directories
+        run: |
+          mkdir ThirdParty
+          mkdir Libraries  
+          
       - name: Check out zlib repository
         uses: actions/checkout@v2
         with:
@@ -31,6 +35,11 @@ jobs:
         with:
           repository: desktop-app/lzma
           path: Libraries\lzma
+          
+      - name: Show directories
+        run: |
+          dir
+          tree   
           
       - name: Check out wallet-desktop repository
         uses: actions/checkout@v2
