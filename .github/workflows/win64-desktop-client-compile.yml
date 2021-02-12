@@ -109,14 +109,16 @@ jobs:
           git apply ../patches/gyp.diff
           cd ..
           dir
-         
-          echo %root%
+        
           set root=%cd%
           SET PATH=%root%\ThirdParty\Strawberry\perl\bin;%root%\ThirdParty\Python27;%root%\ThirdParty\NASM;%root%\ThirdParty\jom;%root%\ThirdParty\cmake\bin;%root%\ThirdParty\yasm;%root%\ThirdParty\gyp;%root%\ThirdParty\Ninja;%PATH%
           echo %PATH%
     
       - name: Install Libraries
         run: |
+          
+          
+          echo %PATH%
           
           echo %root%
           set root=%cd%
