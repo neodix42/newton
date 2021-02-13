@@ -69,13 +69,6 @@ jobs:
         run: |
           curl -o openssl.msi https://slproweb.com/download/Win64OpenSSL-1_1_1i.msi
           msiexec /i openssl.msi /quiet /qn /norestart
-          where /r C:\ libssl.lib
-          where /r D:\ libcrypto.lib
-          cd C:\
-          dir include /S /B
-          
-          cd D:\
-          dir include /S /B
   
       - name: Set up Visual Studio shell
         uses: egor-tensin/vs-shell@v2
@@ -137,15 +130,15 @@ jobs:
          cd openssl_1_1_1
          git checkout OpenSSL_1_1_1-stable
          perl Configure no-shared debug-VC-WIN32
-         nmake
+         D:\a\win-cppcheck\win-cppcheck\ThirdParty\NASM\nmake
          mkdir out32.dbg
          move libcrypto.lib out32.dbg
          move libssl.lib out32.dbg
          move ossl_static.pdb out32.dbg\ossl_static
-         nmake clean
+         D:\a\win-cppcheck\win-cppcheck\ThirdParty\NASM\nmake clean
          move out32.dbg\ossl_static out32.dbg\ossl_static.pdb
          perl Configure no-shared VC-WIN32
-         nmake
+         D:\a\win-cppcheck\win-cppcheck\ThirdParty\NASM\nmake
          mkdir out32
          move libcrypto.lib out32
          move libssl.lib out32
@@ -218,13 +211,14 @@ jobs:
           echo "::add-path::%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;"
           echo %PATH%
           
-          cd Libraries
+          where /r %cd% configure.bat
+          
+          cd Libraries\Qt-5.12.8
 
           SET LibrariesPath=%cd%
           echo %LibrariesPath%
           
-          call configure -prefix "%LibrariesPath%\Qt-5.12.8" -debug-and-release -force-debug-info -opensource -confirm-license -static -static-runtime -I "%LibrariesPath%\openssl_1_1_1\include" -no-opengl -mp -nomake examples -nomake tests
-            
+          call configure -prefix "%LibrariesPath%\Qt-5.12.8" -release -opensource -confirm-license -static -static-runtime -I "C:\Program Files\OpenSSL-Win64\include" -no-opengl -openssl-linked OPENSSL_LIBS_RELEASE="C:\Program Files\OpenSSL-Win64\lib\libssl.lib" -mp -nomake examples -nomake tests  
           echo starting jom
           
           call jom -j4
@@ -253,7 +247,8 @@ jobs:
           dir *.exe /a-D /S /B
           
       - name: Build Wallet Solution
-        run: |           
+        run: | 
+          where /r %cd% configure.bat 
           cd Libraries
           SET LibrariesPath=%cd%
           
