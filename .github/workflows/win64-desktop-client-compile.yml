@@ -69,13 +69,8 @@ jobs:
         run: |
           curl -o openssl.msi https://slproweb.com/download/Win64OpenSSL-1_1_1i.msi
           msiexec /i openssl.msi /quiet /qn /norestart    
-          tree
-          cd ..
-          tree
-          cd ..
-          tree
-          cd ..
-          tree      
+          tree c:\
+          tree d:\
   
       - name: Set up Visual Studio shell
         uses: egor-tensin/vs-shell@v2
