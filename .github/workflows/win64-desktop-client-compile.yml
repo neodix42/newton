@@ -182,6 +182,18 @@ jobs:
           git apply ../../patches/qtbase_5_12_8.diff
           cd ..
           
+      - name: Configuration Wallet Solution   
+          set root=%cd%
+          SET PATH=%root%\ThirdParty\Strawberry\perl\bin;%root%\ThirdParty\Python27;%root%\ThirdParty\NASM;%root%\ThirdParty\jom;%root%\ThirdParty\cmake\bin;%root%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
+          
+          echo "::add-path::%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;"
+          echo %PATH%
+          
+          cd Libraries
+
+          SET LibrariesPath=%cd%
+          echo %LibrariesPath%
+          
           call configure -prefix "%LibrariesPath%\Qt-5.12.8" -debug-and-release -force-debug-info -opensource -confirm-license -static -static-runtime -I "%LibrariesPath%\openssl_1_1_1\include" -no-opengl -mp -nomake examples -nomake tests
             
           echo starting jom
@@ -211,7 +223,7 @@ jobs:
           cd ton\build          
           dir *.exe /a-D /S /B
           
-      - name: Configure
+      - name: Build Wallet Solution
         run: |           
           cd Libraries
           SET LibrariesPath=%cd%
