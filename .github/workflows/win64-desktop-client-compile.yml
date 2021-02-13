@@ -68,7 +68,14 @@ jobs:
       - name: Install OpenSSL Win64
         run: |
           curl -o openssl.msi https://slproweb.com/download/Win64OpenSSL-1_1_1i.msi
-          msiexec /i openssl.msi /quiet /qn /norestart          
+          msiexec /i openssl.msi /quiet /qn /norestart    
+          tree
+          cd ..
+          tree
+          cd ..
+          tree
+          cd ..
+          tree      
   
       - name: Set up Visual Studio shell
         uses: egor-tensin/vs-shell@v2
@@ -175,7 +182,7 @@ jobs:
           git apply ../../patches/qtbase_5_12_8.diff
           cd ..
           
-          call configure -prefix "%LibrariesPath%\Qt-5.12.8" -debug-and-release -force-debug-info -opensource -confirm-license -static -static-runtime -no-opengl -mp -nomake examples -nomake tests
+          call configure -prefix "%LibrariesPath%\Qt-5.12.8" -debug-and-release -force-debug-info -opensource -confirm-license -static -static-runtime -I "%LibrariesPath%\openssl_1_1_1\include" -no-opengl -mp -nomake examples -nomake tests
             
           echo starting jom
           
@@ -191,7 +198,7 @@ jobs:
           cd ton
           mkdir build
           cd build
-          cmake -DZLIB_FOUND=1 -DZLIB_INCLUDE_DIR=%root%\zlib -DZLIB_LIBRARY=%root%\zlib\contrib\vstudio\vc14\x64\ZlibStatReleaseWithoutAsm\zlibstat.lib -DCMAKE_CXX_FLAGS="/DTD_WINDOWS=1 /EHsc /bigobj /W0" -DCMAKE_BUILD_TYPE=Release ..
+          cmake -DZLIB_FOUND=1 -DZLIB_INCLUDE_DIR=%root%\Libraries\zlib -DZLIB_LIBRARY=%root%\Libraries\zlib\contrib\vstudio\vc14\x64\ZlibStatReleaseWithoutAsm\zlibstat.lib -DCMAKE_CXX_FLAGS="/DTD_WINDOWS=1 /EHsc /bigobj /W0" -DCMAKE_BUILD_TYPE=Release ..
           
       - name: Compile ton
         run: |
@@ -205,7 +212,10 @@ jobs:
           dir *.exe /a-D /S /B
           
       - name: Configure
-        run: |
+        run: |           
+          cd Libraries
+          SET LibrariesPath=%cd%
+          
           cd wallet-desktop\Wallet
           call configure.bat -D DESKTOP_APP_USE_PACKAGED=OFF
           msbuild wallet-desktop\Wallet\out\Wallet.sln /property:Configuration=Release
