@@ -122,23 +122,20 @@ jobs:
          set root=%cd%
          SET PATH=%root%\ThirdParty\Strawberry\perl\bin;%root%\ThirdParty\Python27;%root%\ThirdParty\NASM;%root%\ThirdParty\jom;%root%\ThirdParty\cmake\bin;%root%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
           
-         echo "::add-path::%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;"
-         echo %PATH%
-          
          cd Libraries  
          git clone https://github.com/openssl/openssl.git openssl_1_1_1
          cd openssl_1_1_1
          git checkout OpenSSL_1_1_1-stable
          perl Configure no-shared debug-VC-WIN32
-         c:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Tools\MSVC\14.16.27023\bin\HostX86\x86\nmake.exe
+         "c:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Tools\MSVC\14.16.27023\bin\HostX86\x86\nmake.exe"
          mkdir out32.dbg
          move libcrypto.lib out32.dbg
          move libssl.lib out32.dbg
          move ossl_static.pdb out32.dbg\ossl_static
-         c:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Tools\MSVC\14.16.27023\bin\HostX86\x86\nmake.exe clean
+         "c:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Tools\MSVC\14.16.27023\bin\HostX86\x86\nmake.exe" clean
          move out32.dbg\ossl_static out32.dbg\ossl_static.pdb
          perl Configure no-shared VC-WIN32
-         c:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Tools\MSVC\14.16.27023\bin\HostX86\x86\nmake.exe
+         "c:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Tools\MSVC\14.16.27023\bin\HostX86\x86\nmake.exe"
          mkdir out32
          move libcrypto.lib out32
          move libssl.lib out32
@@ -146,8 +143,7 @@ jobs:
          cd ..
          
       - name: Install Libraries
-        run: |           
-
+        run: | 
           set root=%cd%
           SET PATH=%root%\ThirdParty\Strawberry\perl\bin;%root%\ThirdParty\Python27;%root%\ThirdParty\NASM;%root%\ThirdParty\jom;%root%\ThirdParty\cmake\bin;%root%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
           
@@ -216,7 +212,7 @@ jobs:
           SET LibrariesPath=%cd%
           echo %LibrariesPath%
           
-          call configure -prefix "%LibrariesPath%\qt_5_12_8" -release -opensource -confirm-license -static -static-runtime -I "C:\Program Files\OpenSSL-Win64\include" -no-opengl -openssl-linked OPENSSL_LIBS_RELEASE="C:\Program Files\OpenSSL-Win64\lib\libssl.lib" -mp -nomake examples -nomake tests  
+          call configure -prefix "%LibrariesPath%\qt_5_12_8" -release -opensource -confirm-license -static -static-runtime -I "C:\Program Files\OpenSSL-Win64\include" -no-opengl -openssl-linked OPENSSL_LIBS_DEBUG="C:\Program Files\OpenSSL-Win64\lib\libssl.lib" OPENSSL_LIBS_RELEASE="C:\Program Files\OpenSSL-Win64\lib\libssl.lib" -mp -nomake examples -nomake tests  
           echo starting jom
           
           call jom -j4
