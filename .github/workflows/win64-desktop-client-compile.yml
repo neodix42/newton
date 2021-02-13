@@ -69,9 +69,12 @@ jobs:
         run: |
           curl -o openssl.msi https://slproweb.com/download/Win64OpenSSL-1_1_1i.msi
           msiexec /i openssl.msi /quiet /qn /norestart
-          where /r C:/OpenSSL-Win64 libssl.lib
-          where /r C:/OpenSSL-Win64 libcrypto.lib
-          cd C:/OpenSSL-Win64
+          where /r C:\ libssl.lib
+          where /r D:\ libcrypto.lib
+          cd C:\
+          dir include /S /B
+          
+          cd D:\
           dir include /S /B
   
       - name: Set up Visual Studio shell
@@ -125,6 +128,9 @@ jobs:
         run: |
          set root=%cd%
          SET PATH=%root%\ThirdParty\Strawberry\perl\bin;%root%\ThirdParty\Python27;%root%\ThirdParty\NASM;%root%\ThirdParty\jom;%root%\ThirdParty\cmake\bin;%root%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
+          
+         echo "::add-path::%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;"
+         echo %PATH%
           
          cd Libraries  
          git clone https://github.com/openssl/openssl.git openssl_1_1_1
