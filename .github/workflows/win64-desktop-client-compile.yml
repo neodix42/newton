@@ -69,9 +69,9 @@ jobs:
         run: |
           curl -o openssl.msi https://slproweb.com/download/Win64OpenSSL-1_1_1i.msi
           msiexec /i openssl.msi /quiet /qn /norestart
-          where /r C:/Program Files/OpenSSL-Win64 libssl.lib
-          where /r C:/Program Files/OpenSSL-Win64 libcrypto.lib
-          cd C:/Program Files/OpenSSL-Win64
+          where /r C:/OpenSSL-Win64 libssl.lib
+          where /r C:/OpenSSL-Win64 libcrypto.lib
+          cd C:/OpenSSL-Win64
           dir include /S /B
   
       - name: Set up Visual Studio shell
@@ -130,20 +130,20 @@ jobs:
          git clone https://github.com/openssl/openssl.git openssl_1_1_1
          cd openssl_1_1_1
          git checkout OpenSSL_1_1_1-stable
-         perl Configure no-shared debug-VC-WIN64A
+         perl Configure no-shared debug-VC-WIN32
          nmake
-         mkdir out64.dbg
-         move libcrypto.lib out64.dbg
-         move libssl.lib out64.dbg
+         mkdir out32.dbg
+         move libcrypto.lib out32.dbg
+         move libssl.lib out32.dbg
          move ossl_static.pdb out32.dbg\ossl_static
          nmake clean
-         move out64.dbg\ossl_static out64.dbg\ossl_static.pdb
-         perl Configure no-shared VC-WIN64A
+         move out32.dbg\ossl_static out32.dbg\ossl_static.pdb
+         perl Configure no-shared VC-WIN32
          nmake
-         mkdir out64
-         move libcrypto.lib out64
-         move libssl.lib out64
-         move ossl_static.pdb out64
+         mkdir out32
+         move libcrypto.lib out32
+         move libssl.lib out32
+         move ossl_static.pdb out32
          cd ..
          
       - name: Install Libraries
