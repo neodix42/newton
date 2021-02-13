@@ -68,8 +68,8 @@ jobs:
       - name: Install OpenSSL Win64
         run: |
           curl -o openssl.msi https://slproweb.com/download/Win64OpenSSL-1_1_1i.msi
-          msiexec /i openssl.msi /quiet /qn /norestart  /i "msi path" INSTALLDIR=C:\Win64OpenSSL-1_1_1i
-          dir C:\Win64OpenSSL-1_1_1i
+          msiexec /i openssl.msi /quiet /qn /norestart  /i "msi path" INSTALLDIR=%cd%\Libraries\Win64OpenSSL-1_1_1i
+          dir %cd%\Libraries\Win64OpenSSL-1_1_1i
 
   
       - name: Set up Visual Studio shell
