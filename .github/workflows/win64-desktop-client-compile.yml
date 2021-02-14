@@ -70,8 +70,6 @@ jobs:
           curl -o openssl.msi https://slproweb.com/download/Win64OpenSSL-1_1_1i.msi
           msiexec /i openssl.msi /quiet /qn /norestart
   
-
-  
       - name: Install Third Party
         run: |
           cd ThirdParty
@@ -111,11 +109,17 @@ jobs:
           cd gyp
           git checkout 9f2a7bb1
           git apply ../patches/gyp.diff
-    
-      - name: Install OpenSSL and compile 64
+          
+      - name: setx m path
         run: |
          set root=%cd%
-         SET PATH=%root%\ThirdParty\Strawberry\perl\bin;%root%\ThirdParty\Python27;%root%\ThirdParty\NASM;%root%\ThirdParty\jom;%root%\ThirdParty\cmake\bin;%root%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
+         SETX /M PATH=%root%\ThirdParty\Strawberry\perl\bin;%root%\ThirdParty\Python27;%root%\ThirdParty\NASM;%root%\ThirdParty\jom;%root%\ThirdParty\cmake\bin;%root%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
+         echo %PATH%  
+      - name: Install OpenSSL and compile 64
+        run: |
+         echo %PATH%  
+         set root=%cd%
+         SETX /M PATH=%root%\ThirdParty\Strawberry\perl\bin;%root%\ThirdParty\Python27;%root%\ThirdParty\NASM;%root%\ThirdParty\jom;%root%\ThirdParty\cmake\bin;%root%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
          echo %PATH% 
          
          cd Libraries
