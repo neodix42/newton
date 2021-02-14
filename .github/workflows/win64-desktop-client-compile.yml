@@ -69,6 +69,7 @@ jobs:
         run: |
           curl -o openssl.msi https://slproweb.com/download/Win64OpenSSL-1_1_1i.msi
           msiexec /i openssl.msi /quiet /qn /norestart
+          del openssl.msi
   
       - name: Install Third Party
         run: |
@@ -110,6 +111,9 @@ jobs:
           curl -o jom.zip http://www.mirrorservice.org/sites/download.qt-project.org/official_releases/jom/jom_1_1_3.zip
           unzip -q jom.zip -d jom
           del jom.zip
+          cd jom
+          chmod +x jom
+          dir
         
           git clone https://github.com/desktop-app/patches.git
           cd patches
@@ -124,7 +128,6 @@ jobs:
         run: |
          echo "::add-path::"%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\Python27;%cd%\ThirdParty\NASM\nasm-2.15.05;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja"
          echo %PATH%  
-         dir D:\a\win-cppcheck\win-cppcheck\ThirdParty\NASM\nasm-2.15.05
          
       - name: Set up Visual Studio shell
         uses: egor-tensin/vs-shell@v2
@@ -137,7 +140,9 @@ jobs:
          SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\Python27;%cd%\ThirdParty\NASM\nasm-2.15.05;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%PATH%
          
          echo "::add-path::"%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\Python27;%cd%\ThirdParty\NASM\nasm-2.15.05;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja"
-         echo %PATH%  
+         echo %PATH%
+         
+         jom
                   
          cd Libraries
          SET LibrariesPath=%cd% 
