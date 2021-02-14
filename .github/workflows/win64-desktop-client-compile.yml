@@ -200,7 +200,7 @@ jobs:
           echo %LibrariesPath%
           cd qt_5_12_8
           
-          call configure -prefix "%LibrariesPath%\qt_5_12_8" -release -opensource -confirm-license -static -static-runtime -I "%LibrariesPath%/openssl_1_1_1/include" -L "C:\Program Files\OpenSSL-Win64\lib" -no-opengl -mp -nomake examples -nomake tests  
+          call configure -prefix "%LibrariesPath%\qt_5_12_8" -release -opensource -confirm-license -no-opengl -mp -nomake examples -nomake tests  
           
       - name: Compile QT
         run: |
