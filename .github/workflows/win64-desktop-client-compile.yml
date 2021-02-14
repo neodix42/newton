@@ -80,6 +80,10 @@ jobs:
           curl -o install.msi https://www.python.org/ftp/python/2.7.8/python-2.7.8.amd64.msi
           msiexec /i install.msi /quiet /qn /norestart TARGETDIR="%cd%\Python27"
           del install.msi
+        
+          curl -o install.msi https://download.visualstudio.microsoft.com/download/pr/20130c62-1bc8-43d6-b4f0-c20bb7c79113/7276a7355219f7988c480d198e23c2973bbb7ab971c4f0415c26cab2955344e5/vs_BuildTools.exe
+          msiexec /i install.msi /quiet /qn /norestart
+          del install.msi
 
           curl -o cmake.zip -LO https://github.com/Kitware/CMake/releases/download/v3.19.4/cmake-3.19.4-win64-x64.zip
           unzip -q cmake.zip -d cmake   
@@ -93,6 +97,7 @@ jobs:
           cd nasm\nasm-2.15.05
           copy nasm.exe "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\"
           dir "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\"
+          dir "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\"
           
           curl -o yasm.zip http://www.tortall.net/projects/yasm/releases/vsyasm-1.3.0-win64.zip
           unzip -q yasm.zip -d yasm
@@ -141,23 +146,13 @@ jobs:
          cd openssl_1_1_1
          git checkout OpenSSL_1_1_1i
          echo PERL PERL 
-         perl Configure no-shared debug-VC-WIN32
-         echo nasm nasm nasm
-         nasm
-         mkdir out32.dbg
-         move libcrypto.lib out32.dbg
-         move libssl.lib out32.dbg
-         move ossl_static.pdb out32.dbg\ossl_static
-         nasm clean
-         move out32.dbg\ossl_static out32.dbg\ossl_static.pdb
-         perl Configure no-shared VC-WIN32
-         nasm-2.15.05\nasm
+         perl Configure no-shared VC-WIN64A
+         echo nnnnnasm
+         call nmake
          mkdir out32
          move libcrypto.lib out32
          move libssl.lib out32
          move ossl_static.pdb out32
-         
-
     
       - name: Install Libraries
         run: | 
