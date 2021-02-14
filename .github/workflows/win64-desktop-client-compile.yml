@@ -131,15 +131,15 @@ jobs:
          cd openssl_1_1_1
          git checkout OpenSSL_1_1_1i
          perl Configure no-shared debug-VC-WIN32
-         nmake
+         nasm
          mkdir out32.dbg
          move libcrypto.lib out32.dbg
          move libssl.lib out32.dbg
          move ossl_static.pdb out32.dbg\ossl_static
-         nmake clean
+         nasm clean
          move out32.dbg\ossl_static out32.dbg\ossl_static.pdb
          perl Configure no-shared VC-WIN32
-         nmake
+         nasm
          mkdir out32
          move libcrypto.lib out32
          move libssl.lib out32
