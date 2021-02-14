@@ -129,20 +129,6 @@ jobs:
          git clone https://github.com/openssl/openssl.git openssl_1_1_1
          cd openssl_1_1_1
          git checkout OpenSSL_1_1_1i
-         perl Configure no-shared debug-VC-WIN32
-         call nmake
-         mkdir out32.dbg
-         move libcrypto.lib out32.dbg
-         move libssl.lib out32.dbg
-         move ossl_static.pdb out32.dbg\ossl_static
-         call nmake clean
-         move out32.dbg\ossl_static out32.dbg\ossl_static.pdb
-         perl Configure no-shared VC-WIN32
-         call nmake
-         mkdir out32
-         move libcrypto.lib out32
-         move libssl.lib out32
-         move ossl_static.pdb out32
          
       - name: Install Libraries
         run: | 
