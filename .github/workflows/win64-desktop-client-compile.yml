@@ -86,11 +86,12 @@ jobs:
           curl -o cmake.zip -LO https://github.com/Kitware/CMake/releases/download/v3.19.4/cmake-3.19.4-win64-x64.zip
           unzip -q cmake.zip -d cmake   
           del cmake.zip
-
-          curl -o nasm.zip https://www.nasm.us/pub/nasm/releasebuilds/2.15.05/win64/nasm-2.15.05-win64.zip
-          unzip -q nasm.zip -d NASM
-          del nasm.zip
-
+          
+          curl -o nasm.exe https://www.nasm.us/pub/nasm/releasebuilds/2.15.05/win64/nasm-2.15.05-installer-x64.exe
+          msiexec /i nasm.exe /quiet /qn /norestart TARGETDIR="%cd%\NASM"
+          del nasm.exe
+          dir nasm
+          
           curl -o yasm.zip http://www.tortall.net/projects/yasm/releases/vsyasm-1.3.0-win64.zip
           unzip -q yasm.zip -d yasm
           del yasm.zip
