@@ -93,12 +93,6 @@ jobs:
           curl -o nasm.zip https://www.nasm.us/pub/nasm/releasebuilds/2.15.05/win64/nasm-2.15.05-win64.zip
           unzip -q nasm.zip -d NASM
           del nasm.zip
-          dir ..
-          dir nasm
-          cd nasm\nasm-2.15.05
-          copy nasm.exe "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\"
-          dir "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\"
-          dir "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\"
           
           curl -o yasm.zip http://www.tortall.net/projects/yasm/releases/vsyasm-1.3.0-win64.zip
           unzip -q yasm.zip -d yasm
@@ -111,9 +105,6 @@ jobs:
           curl -o jom.zip http://www.mirrorservice.org/sites/download.qt-project.org/official_releases/jom/jom_1_1_3.zip
           unzip -q jom.zip -d jom
           del jom.zip
-          cd jom
-          chmod +x jom
-          dir
         
           git clone https://github.com/desktop-app/patches.git
           cd patches
@@ -141,8 +132,6 @@ jobs:
          
          echo "::add-path::"%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\Python27;%cd%\ThirdParty\NASM\nasm-2.15.05;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja"
          echo %PATH%
-         
-         jom
                   
          cd Libraries
          SET LibrariesPath=%cd% 
