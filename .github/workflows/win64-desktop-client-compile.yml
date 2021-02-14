@@ -195,15 +195,10 @@ jobs:
           echo "::add-path::%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;"
           echo %PATH%
                     
-          cd Libraries
-          dir ..
-          dir include /S /B
-          
-          cd qt_5_12_8
-              
-
+          cd Libraries 
           SET LibrariesPath=%cd%
           echo %LibrariesPath%
+          cd qt_5_12_8
           
           call configure -prefix "%LibrariesPath%\qt_5_12_8" -release -opensource -confirm-license -static -static-runtime -I "%LibrariesPath%\openssl_1_1_1\include" -no-opengl -openssl-linked OPENSSL_LIBS_DEBUG="C:\Program Files\OpenSSL-Win64\lib\libssl.lib" OPENSSL_LIBS_RELEASE="C:\Program Files\OpenSSL-Win64\lib\libssl.lib" -mp -nomake examples -nomake tests  
           echo starting jom
@@ -211,8 +206,7 @@ jobs:
           call jom -j4
           
           call jom -j4 install
-          cd ..
-          
+  
       - name: Build ton
         run: |
           set root=%cd%
