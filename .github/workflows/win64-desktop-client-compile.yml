@@ -58,6 +58,7 @@ jobs:
           cd Libraries\zlib\contrib\vstudio\vc14
           msbuild zlibstat.vcxproj /p:Configuration=Debug /p:platform=x64        
           msbuild zlibstat.vcxproj /p:Configuration=ReleaseWithoutAsm /p:platform=x64
+          perl -v
           
       - name: Compile lzma Win64
         run: |
