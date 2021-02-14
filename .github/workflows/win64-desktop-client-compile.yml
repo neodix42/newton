@@ -117,6 +117,7 @@ jobs:
          echo "::add-path::"%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\Python27;%cd%\ThirdParty\NASM\nasm-2.15.05;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja"
          echo %PATH%  
          dir D:\a\win-cppcheck\win-cppcheck\ThirdParty\NASM\nasm-2.15.05
+         D:\a\win-cppcheck\win-cppcheck\ThirdParty\NASM\nasm-2.15.05\nasm
       - name: Install OpenSSL and compile 64
         run: |
          echo %PATH%  
@@ -130,16 +131,18 @@ jobs:
          git clone https://github.com/openssl/openssl.git openssl_1_1_1
          cd openssl_1_1_1
          git checkout OpenSSL_1_1_1i
+         echo PERL PERL 
          perl Configure no-shared debug-VC-WIN32
-         nasm
+         echo nasm nasm nasm
+         D:\a\win-cppcheck\win-cppcheck\ThirdParty\NASM\nasm-2.15.05\nasm
          mkdir out32.dbg
          move libcrypto.lib out32.dbg
          move libssl.lib out32.dbg
          move ossl_static.pdb out32.dbg\ossl_static
-         nasm clean
+         D:\a\win-cppcheck\win-cppcheck\ThirdParty\NASM\nasm-2.15.05\nasm clean
          move out32.dbg\ossl_static out32.dbg\ossl_static.pdb
          perl Configure no-shared VC-WIN32
-         nasm
+         D:\a\win-cppcheck\win-cppcheck\ThirdParty\NASM\nasm-2.15.05\nasm
          mkdir out32
          move libcrypto.lib out32
          move libssl.lib out32
