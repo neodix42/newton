@@ -88,7 +88,7 @@ jobs:
           del cmake.zip
           
           curl -o nasm.exe https://www.nasm.us/pub/nasm/releasebuilds/2.15.05/win64/nasm-2.15.05-installer-x64.exe
-          msiexec /i nasm.exe /quiet /qn /norestart TARGETDIR="%cd%\NASM"
+          nasm.exe /s
           del nasm.exe
           dir nasm
           
