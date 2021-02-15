@@ -244,5 +244,5 @@ jobs:
           
           cd wallet-desktop\Wallet
           call configure.bat -D DESKTOP_APP_USE_PACKAGED=OFF
-          msbuild wallet-desktop\Wallet\out\Wallet.sln /property:Configuration=Release
+          msbuild wallet-desktop\Wallet\out\Wallet.sln /property:Configuration=Debug
      
