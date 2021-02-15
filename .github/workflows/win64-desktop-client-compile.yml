@@ -212,27 +212,28 @@ jobs:
           
           configure -prefix "%LibrariesPath%\qt_5_12_8" -debug-and-release -force-debug-info -opensource -confirm-license -static -static-runtime -I "%LibrariesPath%\openssl_1_1_1\include" -no-opengl -mp -nomake examples -nomake tests -platform win32-msvc          
 
-          jom -j4      
+          echo JOM 1
+          jom -j4
+          echo JOM 2
           jom -j4 install
 
       - name: Build ton
         run: |
           set root=%cd%
-          echo %root%
-          cd ton
+          cd Libraries\ton
           mkdir build
           cd build
           cmake -DZLIB_FOUND=1 -DZLIB_INCLUDE_DIR=%root%\Libraries\zlib -DZLIB_LIBRARY=%root%\Libraries\zlib\contrib\vstudio\vc14\x64\ZlibStatReleaseWithoutAsm\zlibstat.lib -DCMAKE_CXX_FLAGS="/DTD_WINDOWS=1 /EHsc /bigobj /W0" -DCMAKE_BUILD_TYPE=Release ..
           
       - name: Compile ton
         run: |
-          cd ton\build   
+          cd Libraries\ton\build   
           cmake --build .
         continue-on-error: true          
           
       - name: Show executables
         run: |
-          cd ton\build          
+          cd Libraries\ton\build          
           dir *.exe /a-D /S /B
           
       - name: Build Wallet Solution
