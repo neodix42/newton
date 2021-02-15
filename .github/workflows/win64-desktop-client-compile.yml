@@ -210,12 +210,12 @@ jobs:
           git apply ../../patches/qtbase_5_12_8.diff
           cd ..
           
-          configure -prefix "%LibrariesPath%\qt_5_12_8" -debug-and-release -force-debug-info -opensource -confirm-license -static -static-runtime -I "%LibrariesPath%\openssl_1_1_1\include" -no-opengl -mp -nomake examples -nomake tests -platform win32-msvc          
+          call configure -prefix "%LibrariesPath%\qt_5_12_8" -debug-and-release -force-debug-info -opensource -confirm-license -static -static-runtime -I "%LibrariesPath%\openssl_1_1_1\include" -no-opengl -mp -nomake examples -nomake tests -platform win32-msvc          
 
           echo JOM 1
-          jom -j4
+          call jom -j4
           echo JOM 2
-          jom -j4 install
+          call jom -j4 install
 
       - name: Build ton
         run: |
