@@ -206,8 +206,12 @@ jobs:
       - name: Build and compile tonlib Win32
         run: |
          SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\Python27;%cd%\ThirdParty\NASM\nasm-2.15.05;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
+         cd Libraries
+         SET LibrariesPath=%cd% 
+         
          git clone https://github.com/newton-blockchain/ton.git
          cd ton
+         
          git submodule init
          git submodule update third-party/crc32c
          mkdir build-debug
