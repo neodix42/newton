@@ -258,3 +258,13 @@ jobs:
           cd ..\out
           msbuild Wallet.sln /property:Configuration=Debug /p:platform=win32
      
+      - name: Copy binaries
+        run: |
+          mkdir artifacts
+          copy wallet-desktop\out\Release\Wallet.exe  artifacts
+          
+      - name: Upload artifacts
+        uses: actions/upload-artifact@master
+        with:
+          name: Ton Windows x86 Desktop Client
+          path: artifacts     
