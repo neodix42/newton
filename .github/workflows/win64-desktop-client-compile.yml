@@ -56,7 +56,7 @@ jobs:
       - name: Set up Visual Studio shell
         uses: egor-tensin/vs-shell@v2
         with:
-          arch: x32
+          arch: x86
           
       - name: Compile zlib Win64
         run: |
@@ -128,7 +128,7 @@ jobs:
       - name: Set up Visual Studio shell
         uses: egor-tensin/vs-shell@v2
         with:
-          arch: x32
+          arch: x86
          
       - name: Install OpenSSL and compile x32
         run: |
