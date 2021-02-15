@@ -200,8 +200,8 @@ jobs:
           
           cd ..\..\..\..\..
           
-          git clone git://code.qt.io/qt/qt5.git qt_5_12_8
-          cd qt_5_12_8
+          git clone git://code.qt.io/qt/qt5.git qt
+          cd qt
           perl init-repository --module-subset=qtbase,qtimageformats
           git checkout v5.12.8
           git submodule update --init qtbase
@@ -210,12 +210,12 @@ jobs:
           git apply ../../patches/qtbase_5_12_8.diff
           cd ..
           
-          configure -prefix "%LibrariesPath%\Qt-5.12.8" -debug-and-release -force-debug-info -opensource -confirm-license -static -static-runtime -I "%LibrariesPath%\openssl_1_1_1\include" -no-opengl -mp -nomake examples -nomake tests -platform win32-msvc          
+          call configure -prefix "%LibrariesPath%\q" -debug-and-release -force-debug-info -opensource -confirm-license -static -static-runtime -no-opengl -mp -nomake examples -nomake tests -platform win32-msvc          
 
           echo JOM 1
-          jom -j4
+          call jom -j4
           echo JOM 2
-          jom -j4 install
+          call jom -j4 install
 
       - name: Build ton
         run: |
@@ -240,7 +240,7 @@ jobs:
         run: | 
           SET PATH=%root%\ThirdParty\Strawberry\perl\bin;%root%\ThirdParty\Python27;%root%\ThirdParty\NASM;%root%\ThirdParty\jom;%root%\ThirdParty\cmake\bin;%root%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
           SET LibrariesPath=%cd%\Libraries\
-          SET Qt5_DIR=%cd%\Libraries\qt_5_12_8\qtbase\lib\cmake\Qt5
+          SET Qt5_DIR=%cd%\Libraries\q\qtbase\lib\cmake\Qt5
           
           cd wallet-desktop\Wallet
           call configure.bat -D DESKTOP_APP_USE_PACKAGED=OFF
