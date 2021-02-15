@@ -210,7 +210,7 @@ jobs:
           git apply ../../patches/qtbase_5_12_8.diff
           cd ..
           
-          call configure -prefix "%LibrariesPath%\q" -debug-and-release -force-debug-info -opensource -confirm-license -static -static-runtime -no-opengl -mp -nomake examples -nomake tests -platform win32-msvc          
+          call configure -prefix "%LibrariesPath%\Qt-5.12.8" -debug-and-release -force-debug-info -opensource -confirm-license -static -static-runtime -no-opengl -mp -nomake examples -nomake tests -platform win32-msvc          
 
           call jom -j4
           call jom -j4 install
@@ -240,6 +240,7 @@ jobs:
         run: | 
           SET PATH=%root%\ThirdParty\Strawberry\perl\bin;%root%\ThirdParty\Python27;%root%\ThirdParty\NASM;%root%\ThirdParty\jom;%root%\ThirdParty\cmake\bin;%root%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
           SET LibrariesPath=%cd%\Libraries\
+          SET QT5_DIR=%LibrariesPath%\Qt-5.12.8
           
           cd wallet-desktop\Wallet
           call configure.bat -D DESKTOP_APP_USE_PACKAGED=OFF
