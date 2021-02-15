@@ -47,7 +47,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: newton-blockchain/ton
-          path: ton
+          path: Libraries\ton
           submodules:  'recursive'       
         
       - name: Setup msbuild.exe
@@ -58,7 +58,6 @@ jobs:
           cd Libraries\zlib\contrib\vstudio\vc14
           msbuild zlibstat.vcxproj /p:Configuration=Debug /p:platform=x64        
           msbuild zlibstat.vcxproj /p:Configuration=ReleaseWithoutAsm /p:platform=x64
-          perl -v
           
       - name: Compile lzma Win64
         run: |
