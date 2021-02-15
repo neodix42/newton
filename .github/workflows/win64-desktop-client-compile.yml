@@ -1,4 +1,4 @@
-name: C/C++ CI Windows x64 Desktop newton wallet compile
+name: C/C++ CI Windows x32 Desktop newton wallet compile
 
 on: [push]
 
@@ -52,18 +52,23 @@ jobs:
         
       - name: Setup msbuild.exe
         uses: microsoft/setup-msbuild@v1.0.2
+
+      - name: Set up Visual Studio shell
+        uses: egor-tensin/vs-shell@v2
+        with:
+          arch: x32
           
       - name: Compile zlib Win64
         run: |
           cd Libraries\zlib\contrib\vstudio\vc14
-          msbuild zlibstat.vcxproj /p:Configuration=Debug /p:platform=x64        
-          msbuild zlibstat.vcxproj /p:Configuration=ReleaseWithoutAsm /p:platform=x64
+          msbuild zlibstat.vcxproj /p:Configuration=Debug
+          msbuild zlibstat.vcxproj /p:Configuration=ReleaseWithoutAsm
           
       - name: Compile lzma Win64
         run: |
           cd Libraries\lzma\C\Util\LzmaLib
-          msbuild LzmaLib.sln /property:Configuration=Debug /p:platform=x64 
-          msbuild LzmaLib.sln /property:Configuration=Release /p:platform=x64
+          msbuild LzmaLib.sln /property:Configuration=Debug
+          msbuild LzmaLib.sln /property:Configuration=Release
           
       - name: Install OpenSSL Win64
         run: |
@@ -123,9 +128,9 @@ jobs:
       - name: Set up Visual Studio shell
         uses: egor-tensin/vs-shell@v2
         with:
-          arch: x64
+          arch: x32
          
-      - name: Install OpenSSL and compile 64
+      - name: Install OpenSSL and compile x32
         run: |
          echo %PATH%  
          SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\Python27;%cd%\ThirdParty\NASM\nasm-2.15.05;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%PATH%
