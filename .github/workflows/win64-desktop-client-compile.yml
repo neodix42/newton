@@ -1,4 +1,4 @@
-name: C/C++ CI Windows x32 Desktop newton wallet compile
+name: C/C++ CI Windows x86 Newton Desktop wallet compile
 
 on: [push]
 
@@ -119,18 +119,8 @@ jobs:
           cd gyp
           git checkout 9f2a7bb1
           git apply ../patches/gyp.diff
-          
-      - name: setx m path
-        run: |
-         echo "::add-path::"%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\Python27;%cd%\ThirdParty\NASM\nasm-2.15.05;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja"
-         echo %PATH%  
          
-      - name: Set up Visual Studio shell
-        uses: egor-tensin/vs-shell@v2
-        with:
-          arch: x86
-         
-      - name: Install OpenSSL and compile x32
+      - name: Install OpenSSL and compile x86
         run: |
          echo %PATH%  
          SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\Python27;%cd%\ThirdParty\NASM\nasm-2.15.05;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%PATH%
@@ -220,7 +210,7 @@ jobs:
           call jom -j4
           call jom -j4 install
 
-      - name: Build and compile tonlib
+      - name: Build and compile tonlib Win32
         run: |
           set root=%cd%
           cd Libraries\ton
