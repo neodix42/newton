@@ -229,9 +229,15 @@ jobs:
           mkdir build
           cd build
           cmake -A Win32 -DTON_USE_ROCKSDB=OFF -DTON_USE_ABSEIL=OFF -DTON_ARCH= -DTON_ONLY_TONLIB=ON -DOPENSSL_FOUND=1 -DOPENSSL_INCLUDE_DIR=%LibrariesPath%\openssl_1_1_1\include -DOPENSSL_CRYPTO_LIBRARY=%LibrariesPath%\openssl_1_1_1\out32\libcrypto.lib -DZLIB_FOUND=1 -DZLIB_INCLUDE_DIR=%LibrariesPath%\zlib -DZLIB_LIBRARY=%LibrariesPath%\zlib\contrib\vstudio\vc14\x86\ZlibStatReleaseWithoutAsm\zlibstat.lib -DCMAKE_CXX_FLAGS_RELEASE="/DZLIB_WINAPI /MT /Ob2" -DCMAKE_C_FLAGS_RELEASE="/MT /Ob2" -DCMAKE_EXE_LINKER_FLAGS="/SAFESEH:NO Ws2_32.lib Gdi32.lib Advapi32.lib Crypt32.lib User32.lib" ..
+          cmake --build . --target tonlib --config Release
         continue-on-error: true          
           
-      - name: Show executables
+      - name: Show executables build-debug
+        run: |
+          cd Libraries\ton\build-debug          
+          dir *.exe /a-D /S /B
+          
+      - name: Show executables build
         run: |
           cd Libraries\ton\build          
           dir *.exe /a-D /S /B
@@ -244,5 +250,5 @@ jobs:
           
           cd wallet-desktop\Wallet
           call configure.bat -D DESKTOP_APP_USE_PACKAGED=OFF
-          msbuild wallet-desktop\Wallet\out\Wallet.sln /property:Configuration=Debug
+          msbuild wallet-desktop\out\Wallet.sln /property:Configuration=Debug
      
