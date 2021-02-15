@@ -256,5 +256,5 @@ jobs:
           cd wallet-desktop\Wallet
           call configure.bat -D DESKTOP_APP_USE_PACKAGED=OFF
           cd ..\out
-          msbuild Wallet.sln /property:Configuration=Debug
+          msbuild Wallet.sln /property:Configuration=Debug /p:platform=win32
      
