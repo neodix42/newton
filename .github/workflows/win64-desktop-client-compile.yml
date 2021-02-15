@@ -58,13 +58,13 @@ jobs:
         with:
           arch: x86
           
-      - name: Compile zlib Win64
+      - name: Compile zlib Win32
         run: |
           cd Libraries\zlib\contrib\vstudio\vc14
           msbuild zlibstat.vcxproj /p:Configuration=Debug
           msbuild zlibstat.vcxproj /p:Configuration=ReleaseWithoutAsm
           
-      - name: Compile lzma Win64
+      - name: Compile lzma Win32
         run: |
           cd Libraries\lzma\C\Util\LzmaLib
           msbuild LzmaLib.sln /property:Configuration=Debug
@@ -76,7 +76,7 @@ jobs:
           msiexec /i openssl.msi /quiet /qn /norestart
           del openssl.msi
   
-      - name: Install Third Party
+      - name: Install Third Parties
         run: |
           cd ThirdParty
           curl -o strawberry.zip -LO https://strawberryperl.com/download/5.32.1.1/strawberry-perl-5.32.1.1-64bit-portable.zip
@@ -120,7 +120,7 @@ jobs:
           git checkout 9f2a7bb1
           git apply ../patches/gyp.diff
          
-      - name: Install OpenSSL and compile x86
+      - name: Compile and Install OpenSSL Win32
         run: |
          echo %PATH%  
          SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\Python27;%cd%\ThirdParty\NASM\nasm-2.15.05;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%PATH%
@@ -240,8 +240,6 @@ jobs:
       - name: Build Wallet Solution
         run: | 
           SET PATH=%root%\ThirdParty\Strawberry\perl\bin;%root%\ThirdParty\Python27;%root%\ThirdParty\NASM;%root%\ThirdParty\jom;%root%\ThirdParty\cmake\bin;%root%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
-          SET LibrariesPath=%cd%\Libraries\
-          SET QT5_DIR=%LibrariesPath%\Qt-5.12.8
           
           cd wallet-desktop\Wallet
           call configure.bat -D DESKTOP_APP_USE_PACKAGED=OFF
