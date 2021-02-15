@@ -238,8 +238,9 @@ jobs:
           
       - name: Build Wallet Solution
         run: | 
-          where /r %cd% configure.bat 
-          SET LibrariesPath=%cd%\Libraries
+          SET PATH=%root%\ThirdParty\Strawberry\perl\bin;%root%\ThirdParty\Python27;%root%\ThirdParty\NASM;%root%\ThirdParty\jom;%root%\ThirdParty\cmake\bin;%root%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
+          SET LibrariesPath=%cd%\Libraries\
+          SET Qt5_DIR=%cd%\Libraries\qt_5_12_8\qtbase\lib\cmake\Qt5
           
           cd wallet-desktop\Wallet
           call configure.bat -D DESKTOP_APP_USE_PACKAGED=OFF
