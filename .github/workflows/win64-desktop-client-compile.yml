@@ -213,9 +213,9 @@ jobs:
           call configure -prefix "%LibrariesPath%\qt_5_12_8" -debug-and-release -force-debug-info -opensource -confirm-license -static -static-runtime -I "%LibrariesPath%\openssl_1_1_1\include" -no-opengl -mp -nomake examples -nomake tests -platform win32-msvc          
 
           echo JOM 1
-          call jom -j4
+          jom -j4
           echo JOM 2
-          call jom -j4 install
+          jom -j4 install
 
       - name: Build ton
         run: |
