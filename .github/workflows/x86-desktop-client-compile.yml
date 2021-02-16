@@ -97,7 +97,7 @@ jobs:
       - name: Install Libraries
         run: | 
           "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\vcvars32.bat" 
-          SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\Python27;%cd%\ThirdParty\NASM;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
+          SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\Python27;%cd%\ThirdParty\NASM\nasm-2.15.05;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
           cd Libraries
           SET LibrariesPath=%cd%
           
@@ -114,7 +114,7 @@ jobs:
           cd openssl_1_1_1
           git checkout OpenSSL_1_1_1i
           perl Configure no-shared debug-VC-WIN32
-          nmake
+          call nmake
           mkdir out32.dbg
           move libcrypto.lib out32.dbg
           move libssl.lib out32.dbg
@@ -122,7 +122,7 @@ jobs:
           nmake clean
           move out32.dbg\ossl_static out32.dbg\ossl_static.pdb
           perl Configure no-shared VC-WIN32
-          nmake
+          call nmake
           mkdir out32
           move libcrypto.lib out32
           move libssl.lib out32
@@ -190,7 +190,7 @@ jobs:
       - name: Configure wallet desktop
         run: | 
           "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\vcvars32.bat"  
-          SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\Python27;%cd%\ThirdParty\NASM;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
+          SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\Python27;%cd%\ThirdParty\NASM\nasm-2.15.05;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
           SET LibrariesPath=%cd%\Libraries 
           cd wallet-desktop\Wallet
           call configure.bat -D DESKTOP_APP_USE_PACKAGED=OFF
