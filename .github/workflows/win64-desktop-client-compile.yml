@@ -49,19 +49,19 @@ jobs:
       - name: Set up Visual Studio shell
         uses: egor-tensin/vs-shell@v2
         with:
-          arch: x86
+          arch: x64
           
       - name: Compile zlib Win32
         run: |
           cd Libraries\zlib\contrib\vstudio\vc14
-          msbuild zlibstat.vcxproj /p:Configuration=Debug
-          msbuild zlibstat.vcxproj /p:Configuration=ReleaseWithoutAsm
+          msbuild zlibstat.vcxproj /p:Configuration=Debug /p:platform=win32
+          msbuild zlibstat.vcxproj /p:Configuration=ReleaseWithoutAsm /p:platform=win32
           
       - name: Compile lzma Win32
         run: |
           cd Libraries\lzma\C\Util\LzmaLib
-          msbuild LzmaLib.sln /property:Configuration=Debug
-          msbuild LzmaLib.sln /property:Configuration=Release
+          msbuild LzmaLib.sln /property:Configuration=Debug /p:platform=win32
+          msbuild LzmaLib.sln /property:Configuration=Release /p:platform=win32
           
       - name: Install OpenSSL Win64
         run: |
