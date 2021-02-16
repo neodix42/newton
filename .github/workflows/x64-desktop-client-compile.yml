@@ -52,14 +52,14 @@ jobs:
       - name: Compile zlib x64
         run: |
           cd Libraries\zlib\contrib\vstudio\vc14
-          msbuild zlibstat.vcxproj /p:Configuration=Debug
-          msbuild zlibstat.vcxproj /p:Configuration=ReleaseWithoutAsm
+          msbuild zlibstat.vcxproj /p:Configuration=Debug /p:platform=x64
+          msbuild zlibstat.vcxproj /p:Configuration=ReleaseWithoutAsm /p:platform=x64
           
       - name: Compile lzma x64
         run: |
           cd Libraries\lzma\C\Util\LzmaLib
-          msbuild LzmaLib.sln /property:Configuration=Debug
-          msbuild LzmaLib.sln /property:Configuration=Release
+          msbuild LzmaLib.sln /property:Configuration=Debug /p:platform=x64
+          msbuild LzmaLib.sln /property:Configuration=Release /p:platform=x64
           
       - name: Install OpenSSL x64
         run: |
@@ -221,5 +221,5 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@master
         with:
-          name: Newton Windows x86 Desktop Client
+          name: Newton Windows x64 Desktop Client
           path: artifacts     
