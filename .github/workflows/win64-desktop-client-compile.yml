@@ -54,14 +54,14 @@ jobs:
       - name: Compile zlib Win32
         run: |
           cd Libraries\zlib\contrib\vstudio\vc14
-          msbuild zlibstat.vcxproj /p:Configuration=Debug /p:platform=win32
-          msbuild zlibstat.vcxproj /p:Configuration=ReleaseWithoutAsm /p:platform=win32
+          msbuild zlibstat.vcxproj /p:Configuration=Debug /p:platform=x86
+          msbuild zlibstat.vcxproj /p:Configuration=ReleaseWithoutAsm /p:platform=x86
           
       - name: Compile lzma Win32
         run: |
           cd Libraries\lzma\C\Util\LzmaLib
-          msbuild LzmaLib.sln /property:Configuration=Debug /p:platform=win32
-          msbuild LzmaLib.sln /property:Configuration=Release /p:platform=win32
+          msbuild LzmaLib.sln /property:Configuration=Debug /p:platform=x86
+          msbuild LzmaLib.sln /property:Configuration=Release /p:platform=x86
           
       - name: Install OpenSSL Win64
         run: |
