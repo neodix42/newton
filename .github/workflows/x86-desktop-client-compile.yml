@@ -139,8 +139,8 @@ jobs:
           cd qt_5_12_8
           perl init-repository --module-subset=qtbase,qtimageformats
           git checkout v5.12.8
-          git submodule update --init qtbase
-          git submodule update --init qtimageformats
+          git submodule update qtbase
+          git submodule update qtimageformats
           cd qtbase
           git apply ../../patches/qtbase_5_12_8.diff
           cd ..
