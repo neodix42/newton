@@ -15,7 +15,6 @@ jobs:
       - name: Get Current OS version
         run: |
           systeminfo | findstr /B /C:"OS Name" /C:"OS Version"
-
       - name: Check out current repository
         uses: actions/checkout@v2
         
@@ -23,18 +22,6 @@ jobs:
         run: |
           mkdir ThirdParty
           mkdir Libraries  
-          
-      - name: Check out zlib repository
-        uses: actions/checkout@v2
-        with:
-          repository: desktop-app/zlib
-          path: Libraries\zlib
-          
-      - name: Check out lzma repository
-        uses: actions/checkout@v2
-        with:
-          repository: desktop-app/lzma
-          path: Libraries\lzma
           
       - name: Check out wallet-desktop repository
         uses: actions/checkout@v2
@@ -57,11 +44,9 @@ jobs:
           curl -o strawberry.zip -LO https://strawberryperl.com/download/5.32.1.1/strawberry-perl-5.32.1.1-64bit-portable.zip
           unzip -q strawberry.zip -d Strawberry          
           del strawberry.zip
-
           curl -o install.msi https://www.python.org/ftp/python/2.7.8/python-2.7.8.amd64.msi
           msiexec /i install.msi /quiet /qn /norestart TARGETDIR="%cd%\Python27"
           del install.msi
-
           curl -o cmake.zip -LO https://github.com/Kitware/CMake/releases/download/v3.19.4/cmake-3.19.4-win64-x64.zip
           unzip -q cmake.zip -d cmake   
           del cmake.zip
@@ -73,16 +58,17 @@ jobs:
           curl -o yasm.zip http://www.tortall.net/projects/yasm/releases/vsyasm-1.3.0-win64.zip
           unzip -q yasm.zip -d yasm
           del yasm.zip
-
           curl -o ninja.zip -LO https://github.com/ninja-build/ninja/releases/download/v1.10.2/ninja-win.zip
           unzip -q ninja.zip -d Ninja
           del ninja.zip
-
           curl -o jom.zip http://www.mirrorservice.org/sites/download.qt-project.org/official_releases/jom/jom_1_1_3.zip
           unzip -q jom.zip -d jom
           del jom.zip
         
           git clone https://github.com/desktop-app/patches.git
+          cd patches
+          git checkout 10aeaf6
+          cd ..
           git clone https://chromium.googlesource.com/external/gyp
           cd gyp
           git checkout 9f2a7bb1
@@ -90,7 +76,6 @@ jobs:
     
       - name: Install Libraries
         run: |           
-          dir %cd%\ThirdParty\NASM\nasm-2.15.05
           SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\Python27;%cd%\ThirdParty\NASM\nasm-2.15.05;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
           
           cd Libraries
@@ -100,7 +85,10 @@ jobs:
           SET GYP_MSVS_VERSION=2019
           
           git clone https://github.com/desktop-app/patches.git
-          git clone https://github.com/ericniebler/range-v3 range-v3
+          cd patches
+          git checkout 10aeaf6
+          cd ..
+          git clone --branch 0.11.0 https://github.com/ericniebler/range-v3 range-v3
           
           git clone https://github.com/openssl/openssl.git openssl_1_1_1
           cd openssl_1_1_1
@@ -126,13 +114,11 @@ jobs:
           msbuild zlibstat.vcxproj /property:Configuration=Debug /p:platform=x86
           msbuild zlibstat.vcxproj /property:Configuration=ReleaseWithoutAsm /p:platform=x86
           cd ..\..\..\..
-
           git clone https://github.com/desktop-app/lzma.git
           cd lzma\C\Util\LzmaLib
           msbuild LzmaLib.sln /property:Configuration=Debug /p:platform=x86
           msbuild LzmaLib.sln /property:Configuration=Release /p:platform=x86
           cd ..\..\..\..
-
           git clone https://github.com/google/breakpad
           cd breakpad
           git checkout a1dbcdcb43
@@ -152,10 +138,12 @@ jobs:
           git clone git://code.qt.io/qt/qt5.git qt_5_12_8
           cd qt_5_12_8
           perl init-repository --module-subset=qtbase,qtimageformats
-          git checkout v5.15.2
-          git submodule update qtbase
-          git submodule update qtimageformats
-
+          git checkout v5.12.8
+          git submodule update --init qtbase
+          git submodule update --init qtimageformats
+          cd qtbase
+          git apply ../../patches/qtbase_5_12_8.diff
+          cd ..
           call configure -prefix "%LibrariesPath%\Qt-5.12.8" -debug-and-release -force-debug-info -opensource -confirm-license -static -static-runtime -I "%LibrariesPath%\openssl_1_1_1\include" -no-opengl -openssl-linked OPENSSL_LIBS_DEBUG="%LibrariesPath%\openssl_1_1_1\out32.dbg\libssl.lib %LibrariesPath%\openssl_1_1_1\out32.dbg\libcrypto.lib Ws2_32.lib Gdi32.lib Advapi32.lib Crypt32.lib User32.lib" OPENSSL_LIBS_RELEASE="%LibrariesPath%\openssl_1_1_1\out32\libssl.lib %LibrariesPath%\openssl_1_1_1\out32\libcrypto.lib Ws2_32.lib Gdi32.lib Advapi32.lib Crypt32.lib User32.lib" -mp -nomake examples -nomake tests -platform win32-msvc
  
           call jom -j4
