@@ -78,6 +78,8 @@ jobs:
 
           curl -o install.msi https://www.python.org/ftp/python/2.7.8/python-2.7.8.amd64.msi
           msiexec /i install.msi /quiet /qn /norestart TARGETDIR="%cd%\Python27"
+          dir
+          dir Python27
           del install.msi
 
           curl -o cmake.zip -LO https://github.com/Kitware/CMake/releases/download/v3.19.4/cmake-3.19.4-win64-x64.zip
@@ -111,11 +113,7 @@ jobs:
          
       - name: Compile and Install OpenSSL Win32
         run: |
-         echo %PATH%  
          SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\Python27;%cd%\ThirdParty\NASM\nasm-2.15.05;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%PATH%
-         
-         echo "::add-path::"%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\Python27;%cd%\ThirdParty\NASM\nasm-2.15.05;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja"
-         echo %PATH%
                   
          cd Libraries
          SET LibrariesPath=%cd% 
@@ -140,13 +138,9 @@ jobs:
     
       - name: Install Libraries
         run: | 
-          set root=%cd%
-          SET PATH=%root%\ThirdParty\Strawberry\perl\bin;%root%\ThirdParty\Python27;%root%\ThirdParty\NASM;%root%\ThirdParty\jom;%root%\ThirdParty\cmake\bin;%root%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
-          
+          SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\Python27;%cd%\ThirdParty\NASM;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
           cd Libraries
-
           SET LibrariesPath=%cd%
-          echo %LibrariesPath%
           
           SET GYP_MSVS_OVERRIDE_PATH=C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise
           SET GYP_MSVS_VERSION=2019
@@ -177,7 +171,7 @@ jobs:
           
           call gyp dump_syms.gyp
           
-          msbuild dump_syms.vcxproj /property:Configuration=Release
+          msbuild dump_syms.vcxproj /property:Configuration=Release /p:platform=win32
           
           cd ..\..\..\..\..
           
@@ -196,7 +190,11 @@ jobs:
           call jom -j4
           call jom -j4 install
 
-          cd ..
+      - name: Build and compile tonlib
+        run: | 
+          SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\Python27;%cd%\ThirdParty\NASM;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
+          cd Libraries
+          SET LibrariesPath=%cd%
          
           git clone --recursive https://github.com/newton-blockchain/ton.git
           cd ton         
@@ -212,15 +210,18 @@ jobs:
           cmake -A Win32 -DTON_USE_ROCKSDB=OFF -DTON_USE_ABSEIL=OFF -DTON_ARCH= -DTON_ONLY_TONLIB=ON -DOPENSSL_FOUND=1 -DOPENSSL_INCLUDE_DIR=%LibrariesPath%\openssl_1_1_1\include -DOPENSSL_CRYPTO_LIBRARY=%LibrariesPath%\openssl_1_1_1\out32\libcrypto.lib -DZLIB_FOUND=1 -DZLIB_INCLUDE_DIR=%LibrariesPath%\zlib -DZLIB_LIBRARY=%LibrariesPath%\zlib\contrib\vstudio\vc14\x86\ZlibStatReleaseWithoutAsm\zlibstat.lib -DCMAKE_CXX_FLAGS_RELEASE="/DZLIB_WINAPI /MT /Ob2" -DCMAKE_C_FLAGS_RELEASE="/MT /Ob2" -DCMAKE_EXE_LINKER_FLAGS="/SAFESEH:NO Ws2_32.lib Gdi32.lib Advapi32.lib Crypt32.lib User32.lib" ..
           cmake --build . --target tonlib --config Release
           
-          dir
-          
-          cd ..\..\..
-          
-          dir
+      - name: Configure wallet desktop
+        run: | 
+          SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\Python27;%cd%\ThirdParty\NASM;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
           
           cd wallet-desktop\Wallet
           call configure.bat -D DESKTOP_APP_USE_PACKAGED=OFF
-          cd ..\out
+          
+      - name: Build wallet desktop
+        run: | 
+          SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\Python27;%cd%\ThirdParty\NASM;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
+          
+          cd wallet-desktop\out
           msbuild Wallet.sln /property:Configuration=Release /p:platform=win32
      
       - name: Copy binaries
