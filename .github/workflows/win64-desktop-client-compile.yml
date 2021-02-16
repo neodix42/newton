@@ -1,4 +1,4 @@
-name: C/C++ CI Windows x86 Newton Desktop wallet compile
+name: C/C++ CI Windows x64 Newton Desktop wallet compile
 
 on: [push]
 
@@ -48,20 +48,18 @@ jobs:
 
       - name: Set up Visual Studio shell
         uses: egor-tensin/vs-shell@v2
-        with:
-          arch: x86
           
-      - name: Compile zlib Win32
+      - name: Compile zlib x64
         run: |
           cd Libraries\zlib\contrib\vstudio\vc14
-          msbuild zlibstat.vcxproj /p:Configuration=Debug /p:platform=x86
-          msbuild zlibstat.vcxproj /p:Configuration=ReleaseWithoutAsm /p:platform=x86
+          msbuild zlibstat.vcxproj /p:Configuration=Debug
+          msbuild zlibstat.vcxproj /p:Configuration=ReleaseWithoutAsm
           
       - name: Compile lzma Win32
         run: |
           cd Libraries\lzma\C\Util\LzmaLib
-          msbuild LzmaLib.sln /property:Configuration=Debug /p:platform=x86
-          msbuild LzmaLib.sln /property:Configuration=Release /p:platform=x86
+          msbuild LzmaLib.sln /property:Configuration=Debug
+          msbuild LzmaLib.sln /property:Configuration=Release
           
       - name: Install OpenSSL Win64
         run: |
@@ -111,7 +109,7 @@ jobs:
           git checkout 9f2a7bb1
           git apply ../patches/gyp.diff
          
-      - name: Compile and Install OpenSSL Win32
+      - name: Compile and Install OpenSSL Win64
         run: |
          SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\Python27;%cd%\ThirdParty\NASM\nasm-2.15.05;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%PATH%
                   
@@ -121,7 +119,7 @@ jobs:
          git clone https://github.com/openssl/openssl.git openssl_1_1_1
          cd openssl_1_1_1
          git checkout OpenSSL_1_1_1i
-         perl Configure no-shared debug-VC-WIN32
+         perl Configure no-shared debug-VC-WIN64A
          nmake
          mkdir out32.dbg
          move libcrypto.lib out32.dbg
@@ -129,7 +127,7 @@ jobs:
          move ossl_static.pdb out32.dbg\ossl_static
          nmake clean
          move out32.dbg\ossl_static out32.dbg\ossl_static.pdb
-         perl Configure no-shared VC-WIN32
+         perl Configure no-shared VC-WIN64A
          call nmake
          mkdir out32
          move libcrypto.lib out32
@@ -185,7 +183,7 @@ jobs:
           git apply ../../patches/qtbase_5_12_8.diff
           cd ..
           
-          call configure -prefix "%LibrariesPath%\Qt-5.12.8" -debug-and-release -force-debug-info -opensource -confirm-license -static -static-runtime -no-opengl -mp -nomake examples -nomake tests -platform win32-msvc          
+          call configure -prefix "%LibrariesPath%\Qt-5.12.8" -debug-and-release -force-debug-info -opensource -confirm-license -static -static-runtime -no-opengl -mp -nomake examples -nomake tests
 
           call jom -j4
           call jom -j4 install
@@ -202,12 +200,12 @@ jobs:
           git submodule update third-party/crc32c
           mkdir build-debug
           cd build-debug
-          cmake -A Win32 -DTON_USE_ROCKSDB=OFF -DTON_USE_ABSEIL=OFF -DTON_ARCH= -DTON_ONLY_TONLIB=ON -DOPENSSL_FOUND=1 -DOPENSSL_INCLUDE_DIR=%LibrariesPath%\openssl_1_1_1\include -DOPENSSL_CRYPTO_LIBRARY=%LibrariesPath%\openssl_1_1_1\out32.dbg\libcrypto.lib -DZLIB_FOUND=1 -DZLIB_INCLUDE_DIR=%LibrariesPath%\zlib -DZLIB_LIBRARY=%LibrariesPath%\zlib\contrib\vstudio\vc14\x86\ZlibStatDebug\zlibstat.lib -DCMAKE_CXX_FLAGS_DEBUG="/DZLIB_WINAPI /DNDEBUG /MTd /Zi /Od /Ob0" -DCMAKE_C_FLAGS_DEBUG="/DNDEBUG /MTd /Zi /Od /Ob0" -DCMAKE_EXE_LINKER_FLAGS="/SAFESEH:NO Ws2_32.lib Gdi32.lib Advapi32.lib Crypt32.lib User32.lib" ..
+          cmake -DZLIB_FOUND=1 -DZLIB_INCLUDE_DIR=%root%\zlib -DZLIB_LIBRARY=%root%\zlib\contrib\vstudio\vc14\x64\ZlibStatReleaseWithoutAsm\zlibstat.lib -DCMAKE_CXX_FLAGS="/DTD_WINDOWS=1 /EHsc /bigobj /W0" -DCMAKE_BUILD_TYPE=Debug ..
           cmake --build . --target tonlib --config Debug
           cd ..
           mkdir build
           cd build
-          cmake -A Win32 -DTON_USE_ROCKSDB=OFF -DTON_USE_ABSEIL=OFF -DTON_ARCH= -DTON_ONLY_TONLIB=ON -DOPENSSL_FOUND=1 -DOPENSSL_INCLUDE_DIR=%LibrariesPath%\openssl_1_1_1\include -DOPENSSL_CRYPTO_LIBRARY=%LibrariesPath%\openssl_1_1_1\out32\libcrypto.lib -DZLIB_FOUND=1 -DZLIB_INCLUDE_DIR=%LibrariesPath%\zlib -DZLIB_LIBRARY=%LibrariesPath%\zlib\contrib\vstudio\vc14\x86\ZlibStatReleaseWithoutAsm\zlibstat.lib -DCMAKE_CXX_FLAGS_RELEASE="/DZLIB_WINAPI /MT /Ob2" -DCMAKE_C_FLAGS_RELEASE="/MT /Ob2" -DCMAKE_EXE_LINKER_FLAGS="/SAFESEH:NO Ws2_32.lib Gdi32.lib Advapi32.lib Crypt32.lib User32.lib" ..
+          cmake -DZLIB_FOUND=1 -DZLIB_INCLUDE_DIR=%root%\zlib -DZLIB_LIBRARY=%root%\zlib\contrib\vstudio\vc14\x64\ZlibStatReleaseWithoutAsm\zlibstat.lib -DCMAKE_CXX_FLAGS="/DTD_WINDOWS=1 /EHsc /bigobj /W0" -DCMAKE_BUILD_TYPE=Release ..
           cmake --build . --target tonlib --config Release
           
       - name: Configure wallet desktop
@@ -222,7 +220,7 @@ jobs:
           SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\Python27;%cd%\ThirdParty\NASM;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
           SET LibrariesPath=%cd%\Libraries
           cd wallet-desktop\out
-          msbuild Wallet.sln /property:Configuration=Release /p:platform=win32
+          msbuild Wallet.sln /property:Configuration=Release
      
       - name: Copy binaries
         run: |
