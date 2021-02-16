@@ -211,7 +211,7 @@ jobs:
           SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\Python27;%cd%\ThirdParty\NASM;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
           SET LibrariesPath=%cd%\Libraries
           cd wallet-desktop\out
-          msbuild Wallet.sln /property:Configuration=Release
+          msbuild Wallet.sln /property:Configuration=Release /p:platform=x64
      
       - name: Copy binaries
         run: |
