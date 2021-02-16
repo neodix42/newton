@@ -52,6 +52,11 @@ jobs:
           msiexec /i openssl.msi /quiet /qn /norestart
           del openssl.msi
   
+      - name: Set up Visual Studio shell
+        uses: egor-tensin/vs-shell@v2
+        with:
+          arch: x86
+
       - name: Install Third Parties
         run: |
           cd ThirdParty
@@ -96,11 +101,10 @@ jobs:
           git apply ../patches/gyp.diff
     
       - name: Install Libraries
-        run: | 
-          "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\vcvars32.bat" 
+        run: |           
           dir %cd%\ThirdParty\NASM\nasm-2.15.05
           SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\Python27;%cd%\ThirdParty\NASM\nasm-2.15.05;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
-          echo "::add-path::"%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\Python27;%cd%\ThirdParty\NASM\nasm-2.15.05;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja"
+          
           cd Libraries
           SET LibrariesPath=%cd%
           
@@ -191,8 +195,7 @@ jobs:
           cmake --build . --target tonlib --config Release
           
       - name: Configure wallet desktop
-        run: | 
-          "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\vcvars32.bat"  
+        run: |           
           SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\Python27;%cd%\ThirdParty\NASM\nasm-2.15.05;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
           SET LibrariesPath=%cd%\Libraries 
           cd wallet-desktop\Wallet
