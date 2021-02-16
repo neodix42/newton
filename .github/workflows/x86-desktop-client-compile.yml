@@ -146,12 +146,12 @@ jobs:
           cd src
           git clone https://github.com/google/googletest testing
           cd client\windows
-          call gyp --no-circular-check breakpad_client.gyp --format=ninja
+          gyp --no-circular-check breakpad_client.gyp --format=ninja
           cd ..\..
           ninja -C out/Debug common crash_generation_client exception_handler
           ninja -C out/Release common crash_generation_client exception_handler
           cd tools\windows\dump_syms
-          call gyp dump_syms.gyp
+          gyp dump_syms.gyp
           msbuild dump_syms.vcxproj /property:Configuration=Release
           cd ..\..\..\..\..
           
@@ -165,10 +165,10 @@ jobs:
           git apply ../../patches/qtbase_5_12_8.diff
           cd ..
 
-          call configure -prefix "%LibrariesPath%\Qt-5.12.8" -debug-and-release -force-debug-info -opensource -confirm-license -static -static-runtime -I "%LibrariesPath%\openssl_1_1_1\include" -no-opengl -openssl-linked OPENSSL_LIBS_DEBUG="%LibrariesPath%\openssl_1_1_1\out32.dbg\libssl.lib %LibrariesPath%\openssl_1_1_1\out32.dbg\libcrypto.lib Ws2_32.lib Gdi32.lib Advapi32.lib Crypt32.lib User32.lib" OPENSSL_LIBS_RELEASE="%LibrariesPath%\openssl_1_1_1\out32\libssl.lib %LibrariesPath%\openssl_1_1_1\out32\libcrypto.lib Ws2_32.lib Gdi32.lib Advapi32.lib Crypt32.lib User32.lib" -mp -nomake examples -nomake tests -platform win32-msvc
+          configure -prefix "%LibrariesPath%\Qt-5.12.8" -debug-and-release -force-debug-info -opensource -confirm-license -static -static-runtime -I "%LibrariesPath%\openssl_1_1_1\include" -no-opengl -openssl-linked OPENSSL_LIBS_DEBUG="%LibrariesPath%\openssl_1_1_1\out32.dbg\libssl.lib %LibrariesPath%\openssl_1_1_1\out32.dbg\libcrypto.lib Ws2_32.lib Gdi32.lib Advapi32.lib Crypt32.lib User32.lib" OPENSSL_LIBS_RELEASE="%LibrariesPath%\openssl_1_1_1\out32\libssl.lib %LibrariesPath%\openssl_1_1_1\out32\libcrypto.lib Ws2_32.lib Gdi32.lib Advapi32.lib Crypt32.lib User32.lib" -mp -nomake examples -nomake tests -platform win32-msvc
  
-          call jom -j4
-          call jom -j4 install
+          jom -j4
+          jom -j4 install
           cd ..
 
           git clone --recursive https://github.com/newton-blockchain/ton.git
@@ -190,7 +190,7 @@ jobs:
           SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\Python27;%cd%\ThirdParty\NASM\nasm-2.15.05;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
           SET LibrariesPath=%cd%\Libraries 
           cd wallet-desktop\Wallet
-          call configure.bat -D DESKTOP_APP_USE_PACKAGED=OFF
+          configure.bat -D DESKTOP_APP_USE_PACKAGED=OFF
           echo START BUILD
           cd ..\out
           msbuild Wallet.sln /property:Configuration=Release /p:platform=win32
