@@ -123,14 +123,14 @@ jobs:
           
           git clone https://github.com/desktop-app/zlib.git
           cd zlib\contrib\vstudio\vc14
-          msbuild zlibstat.vcxproj /property:Configuration=Debug
-          msbuild zlibstat.vcxproj /property:Configuration=ReleaseWithoutAsm
+          msbuild zlibstat.vcxproj /property:Configuration=Debug /p:platform=x86
+          msbuild zlibstat.vcxproj /property:Configuration=ReleaseWithoutAsm /p:platform=x86
           cd ..\..\..\..
 
           git clone https://github.com/desktop-app/lzma.git
           cd lzma\C\Util\LzmaLib
-          msbuild LzmaLib.sln /property:Configuration=Debug
-          msbuild LzmaLib.sln /property:Configuration=Release
+          msbuild LzmaLib.sln /property:Configuration=Debug /p:platform=x86
+          msbuild LzmaLib.sln /property:Configuration=Release /p:platform=x86
           cd ..\..\..\..
 
           git clone https://github.com/google/breakpad
@@ -140,13 +140,13 @@ jobs:
           cd src
           git clone https://github.com/google/googletest testing
           cd client\windows
-          gyp --no-circular-check breakpad_client.gyp --format=ninja
+          call gyp --no-circular-check breakpad_client.gyp --format=ninja
           cd ..\..
           ninja -C out/Debug common crash_generation_client exception_handler
           ninja -C out/Release common crash_generation_client exception_handler
           cd tools\windows\dump_syms
-          gyp dump_syms.gyp
-          msbuild dump_syms.vcxproj /property:Configuration=Release
+          call gyp dump_syms.gyp
+          msbuild dump_syms.vcxproj /property:Configuration=Release /p:platform=x86
           cd ..\..\..\..\..
           
           git clone git://code.qt.io/qt/qt5.git qt_5_12_8
@@ -156,10 +156,10 @@ jobs:
           git submodule update qtbase
           git submodule update qtimageformats
 
-          configure -prefix "%LibrariesPath%\Qt-5.12.8" -debug-and-release -force-debug-info -opensource -confirm-license -static -static-runtime -I "%LibrariesPath%\openssl_1_1_1\include" -no-opengl -openssl-linked OPENSSL_LIBS_DEBUG="%LibrariesPath%\openssl_1_1_1\out32.dbg\libssl.lib %LibrariesPath%\openssl_1_1_1\out32.dbg\libcrypto.lib Ws2_32.lib Gdi32.lib Advapi32.lib Crypt32.lib User32.lib" OPENSSL_LIBS_RELEASE="%LibrariesPath%\openssl_1_1_1\out32\libssl.lib %LibrariesPath%\openssl_1_1_1\out32\libcrypto.lib Ws2_32.lib Gdi32.lib Advapi32.lib Crypt32.lib User32.lib" -mp -nomake examples -nomake tests -platform win32-msvc
+          call configure -prefix "%LibrariesPath%\Qt-5.12.8" -debug-and-release -force-debug-info -opensource -confirm-license -static -static-runtime -I "%LibrariesPath%\openssl_1_1_1\include" -no-opengl -openssl-linked OPENSSL_LIBS_DEBUG="%LibrariesPath%\openssl_1_1_1\out32.dbg\libssl.lib %LibrariesPath%\openssl_1_1_1\out32.dbg\libcrypto.lib Ws2_32.lib Gdi32.lib Advapi32.lib Crypt32.lib User32.lib" OPENSSL_LIBS_RELEASE="%LibrariesPath%\openssl_1_1_1\out32\libssl.lib %LibrariesPath%\openssl_1_1_1\out32\libcrypto.lib Ws2_32.lib Gdi32.lib Advapi32.lib Crypt32.lib User32.lib" -mp -nomake examples -nomake tests -platform win32-msvc
  
-          jom -j4
-          jom -j4 install
+          call jom -j4
+          call jom -j4 install
           cd ..
 
           git clone --recursive https://github.com/newton-blockchain/ton.git
@@ -181,7 +181,7 @@ jobs:
           SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\Python27;%cd%\ThirdParty\NASM\nasm-2.15.05;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
           SET LibrariesPath=%cd%\Libraries 
           cd wallet-desktop\Wallet
-          configure.bat -D DESKTOP_APP_USE_PACKAGED=OFF
+          call configure.bat -D DESKTOP_APP_USE_PACKAGED=OFF
           echo START BUILD
           cd ..\out
           msbuild Wallet.sln /property:Configuration=Release /p:platform=win32
