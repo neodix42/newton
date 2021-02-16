@@ -55,13 +55,13 @@ jobs:
           msbuild zlibstat.vcxproj /p:Configuration=Debug
           msbuild zlibstat.vcxproj /p:Configuration=ReleaseWithoutAsm
           
-      - name: Compile lzma Win32
+      - name: Compile lzma x64
         run: |
           cd Libraries\lzma\C\Util\LzmaLib
           msbuild LzmaLib.sln /property:Configuration=Debug
           msbuild LzmaLib.sln /property:Configuration=Release
           
-      - name: Install OpenSSL Win64
+      - name: Install OpenSSL x64
         run: |
           curl -o openssl.msi https://slproweb.com/download/Win64OpenSSL-1_1_1i.msi
           msiexec /i openssl.msi /quiet /qn /norestart
@@ -120,19 +120,10 @@ jobs:
          cd openssl_1_1_1
          git checkout OpenSSL_1_1_1i
          perl Configure no-shared debug-VC-WIN64A
-         nmake
-         mkdir out32.dbg
-         move libcrypto.lib out32.dbg
-         move libssl.lib out32.dbg
-         move ossl_static.pdb out32.dbg\ossl_static
-         nmake clean
-         move out32.dbg\ossl_static out32.dbg\ossl_static.pdb
+         nmake         
          perl Configure no-shared VC-WIN64A
-         call nmake
-         mkdir out32
-         move libcrypto.lib out32
-         move libssl.lib out32
-         move ossl_static.pdb out32
+         nmake
+         
     
       - name: Install Libraries
         run: | 
@@ -188,7 +179,7 @@ jobs:
           call jom -j4
           call jom -j4 install
 
-      - name: Build and compile tonlib
+      - name: Build and compile tonlib x64
         run: | 
           SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\Python27;%cd%\ThirdParty\NASM;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
           cd Libraries
@@ -214,7 +205,7 @@ jobs:
           SET LibrariesPath=%cd%\Libraries 
           cd wallet-desktop\Wallet
           call configure.bat -D DESKTOP_APP_USE_PACKAGED=OFF
-          
+
       - name: Build wallet desktop
         run: | 
           SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\Python27;%cd%\ThirdParty\NASM;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
