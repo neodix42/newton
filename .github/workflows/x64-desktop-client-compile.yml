@@ -222,4 +222,4 @@ jobs:
         uses: actions/upload-artifact@master
         with:
           name: Newton Windows x64 Desktop Client
-          path: artifacts     
+          path: artifacts
