@@ -21,15 +21,8 @@ jobs:
       - name: Create directories
         run: |
           mkdir ThirdParty
-          mkdir Libraries  
-          
-      - name: Check out wallet-desktop repository
-        uses: actions/checkout@v2
-        with:
-          repository: newton-blockchain/wallet-desktop
-          path: wallet-desktop
-          submodules: 'recursive'
-          
+          mkdir Libraries            
+      
       - name: Setup msbuild.exe
         uses: microsoft/setup-msbuild@v1.0.2
   
@@ -91,7 +84,7 @@ jobs:
           cd patches
           git checkout 10aeaf6
           cd ..
-          git clone --branch 0.11.0 https://github.com/ericniebler/range-v3 range-v3
+          git clone --branch 0.10.0 https://github.com/ericniebler/range-v3 range-v3
           
           git clone https://github.com/openssl/openssl.git openssl_1_1_1
           cd openssl_1_1_1
@@ -165,7 +158,10 @@ jobs:
           cmake -A Win32 -DTON_USE_ROCKSDB=OFF -DTON_USE_ABSEIL=OFF -DTON_ARCH= -DTON_ONLY_TONLIB=ON -DOPENSSL_FOUND=1 -DOPENSSL_INCLUDE_DIR=%LibrariesPath%\openssl_1_1_1\include -DOPENSSL_CRYPTO_LIBRARY=%LibrariesPath%\openssl_1_1_1\out32\libcrypto.lib -DZLIB_FOUND=1 -DZLIB_INCLUDE_DIR=%LibrariesPath%\zlib -DZLIB_LIBRARY=%LibrariesPath%\zlib\contrib\vstudio\vc14\x86\ZlibStatReleaseWithoutAsm\zlibstat.lib -DCMAKE_CXX_FLAGS_RELEASE="/DZLIB_WINAPI /MT /Ob2" -DCMAKE_C_FLAGS_RELEASE="/MT /Ob2" -DCMAKE_EXE_LINKER_FLAGS="/SAFESEH:NO Ws2_32.lib Gdi32.lib Advapi32.lib Crypt32.lib User32.lib" ..
           cmake --build . --target tonlib --config Release
           
-          cd %LibrariesPath%\..\wallet-desktop\Wallet
+          cd %LibrariesPath%\..
+          git clone --recursive https://github.com/newton-blockchain/wallet-desktop.git
+          
+          cd wallet-desktop\Wallet
           python --version
           call configure.bat -D DESKTOP_APP_USE_PACKAGED=OFF          
           cd ..\out          
