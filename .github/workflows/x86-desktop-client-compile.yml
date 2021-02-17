@@ -167,7 +167,7 @@ jobs:
           
           cd %LibrariesPath%\..\wallet-desktop\Wallet
           python --version
-          configure -D DESKTOP_APP_USE_PACKAGED=OFF          
+          call configure -D DESKTOP_APP_USE_PACKAGED=OFF          
           cd ..\out          
           msbuild Wallet.sln /property:Configuration=Release /p:platform=win32
      
