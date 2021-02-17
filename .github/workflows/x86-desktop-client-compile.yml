@@ -68,18 +68,19 @@ jobs:
           git checkout 9f2a7bb1
           git apply ../patches/gyp.diff
     
-#      - name: Set up Visual Studio shell
-#        uses: egor-tensin/vs-shell@v2
-#        with:
-#          arch: x86   
+      - name: Set up Visual Studio shell
+        uses: egor-tensin/vs-shell@v2
+        with:
+          arch: x86   
           
       - name: Install Libraries
         run: |           
           python --version
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars32.bat"
+          dir "C:/hostedtoolcache/windows"
           SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\NASM\nasm-2.15.05;%cd%\ThirdParty\Python27;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
-
           python --version
+          dir "C:/hostedtoolcache/windows"
+
           cd Libraries
           SET LibrariesPath=%cd%
           
