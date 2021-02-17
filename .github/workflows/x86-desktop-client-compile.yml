@@ -31,6 +31,7 @@ jobs:
           python --version
           rm -rf "C:/hostedtoolcache/windows/Python"
           dir "C:/hostedtoolcache/windows"
+          python --version
           cd ThirdParty
           curl -o strawberry.zip -LO https://strawberryperl.com/download/5.32.1.1/strawberry-perl-5.32.1.1-64bit-portable.zip
           unzip -q strawberry.zip -d Strawberry          
@@ -74,9 +75,10 @@ jobs:
           
       - name: Install Libraries
         run: |           
-          "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars32.bat"
+          python --version
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars32.bat"
           SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\NASM\nasm-2.15.05;%cd%\ThirdParty\Python27;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
-                    
+
           python --version
           cd Libraries
           SET LibrariesPath=%cd%
