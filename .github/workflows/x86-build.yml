@@ -18,10 +18,15 @@ jobs:
       - name: Check out current repository
         uses: actions/checkout@v2
         
+      - name: Run batch file
+        run: |
+          dir "C:\Program Files (x86)\Microsoft Visual Studio\"
+          dir "C:\Program Files (x86)\Microsoft Visual Studio\2017"
+        
       - name: Setup msbuild.exe
         uses: microsoft/setup-msbuild@v1.0.2
         with:
-          vs-version: '[15.8,15.9)'
+          vs-version: '[15,16)'
   
       - name: Set up Visual Studio shell
         uses: egor-tensin/vs-shell@v2
