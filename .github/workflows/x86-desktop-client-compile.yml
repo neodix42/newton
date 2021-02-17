@@ -165,17 +165,10 @@ jobs:
           cmake -A Win32 -DTON_USE_ROCKSDB=OFF -DTON_USE_ABSEIL=OFF -DTON_ARCH= -DTON_ONLY_TONLIB=ON -DOPENSSL_FOUND=1 -DOPENSSL_INCLUDE_DIR=%LibrariesPath%\openssl_1_1_1\include -DOPENSSL_CRYPTO_LIBRARY=%LibrariesPath%\openssl_1_1_1\out32\libcrypto.lib -DZLIB_FOUND=1 -DZLIB_INCLUDE_DIR=%LibrariesPath%\zlib -DZLIB_LIBRARY=%LibrariesPath%\zlib\contrib\vstudio\vc14\x86\ZlibStatReleaseWithoutAsm\zlibstat.lib -DCMAKE_CXX_FLAGS_RELEASE="/DZLIB_WINAPI /MT /Ob2" -DCMAKE_C_FLAGS_RELEASE="/MT /Ob2" -DCMAKE_EXE_LINKER_FLAGS="/SAFESEH:NO Ws2_32.lib Gdi32.lib Advapi32.lib Crypt32.lib User32.lib" ..
           cmake --build . --target tonlib --config Release
           
-      - name: Configure wallet desktop
-        run: |
-          SET root=%cd%
-          SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\NASM\nasm-2.15.05;%cd%\ThirdParty\Python27;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%          
-          SET LibrariesPath=%cd%\Libraries 
-          cd wallet-desktop\Wallet
+          cd %LibrariesPath%\..\wallet-desktop\Wallet
           python --version
-          echo haja
-          "%root%\ThirdParty\Python27\python.exe" --version
-          "%root%\ThirdParty\Python27\python.exe" configure.py -D DESKTOP_APP_USE_PACKAGED=OFF
-          cd ..\out
+          configure -D DESKTOP_APP_USE_PACKAGED=OFF          
+          cd ..\out          
           msbuild Wallet.sln /property:Configuration=Release /p:platform=win32
      
       - name: Copy binaries
