@@ -171,6 +171,7 @@ jobs:
           echo START BUILD
           cd ..\out
           msbuild Wallet.sln /property:Configuration=Release /p:platform=win32
+          cat "D:\a\win-cppcheck\win-cppcheck\wallet-desktop\Wallet\ThirdParty\variant\include\mapbox/variant.hpp"
      
       - name: Copy binaries
         run: |
