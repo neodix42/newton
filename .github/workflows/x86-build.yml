@@ -8,7 +8,7 @@ defaults:
 jobs:
   build:
 
-    runs-on: windows-latest
+    runs-on: windows-2016
 
     steps:
       - name: Get Current OS version
@@ -21,12 +21,9 @@ jobs:
       - name: Run batch file
         run: |
           dir "C:\Program Files (x86)\Microsoft Visual Studio\"
-          dir "C:\Program Files (x86)\Microsoft Visual Studio\2017"
         
       - name: Setup msbuild.exe
         uses: microsoft/setup-msbuild@v1.0.2
-        with:
-          vs-version: '[15,16)'
   
       - name: Set up Visual Studio shell
         uses: egor-tensin/vs-shell@v2
