@@ -166,12 +166,15 @@ jobs:
           cmake --build . --target tonlib --config Release
           
       - name: Configure wallet desktop
-        run: |           
-          SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\NASM\nasm-2.15.05;%cd%\ThirdParty\Python27;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
+        run: |
+          SET root=%cd%
+          SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\NASM\nasm-2.15.05;%cd%\ThirdParty\Python27;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%          
           SET LibrariesPath=%cd%\Libraries 
           cd wallet-desktop\Wallet
           python --version
-          call configure.bat -D DESKTOP_APP_USE_PACKAGED=OFF
+          echo haja
+          "%root%\ThirdParty\Python27\python.exe" --version
+          "%root%\ThirdParty\Python27\python.exe" configure.py -D DESKTOP_APP_USE_PACKAGED=OFF
           cd ..\out
           msbuild Wallet.sln /property:Configuration=Release /p:platform=win32
      
