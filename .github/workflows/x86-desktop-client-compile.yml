@@ -141,7 +141,7 @@ jobs:
           git clone git://code.qt.io/qt/qt5.git qt_5_12_8
           cd qt_5_12_8
           perl init-repository --module-subset=qtbase,qtimageformats
-          git checkout v5.15.2
+          git checkout v5.12.8
           git submodule update qtbase
           git submodule update qtimageformats
 
@@ -174,7 +174,6 @@ jobs:
           echo START BUILD
           cd ..\out
           msbuild Wallet.sln /property:Configuration=Release /p:platform=win32
-          cat "D:\a\win-cppcheck\win-cppcheck\wallet-desktop\Wallet\ThirdParty\variant\include\mapbox/variant.hpp"
      
       - name: Copy binaries
         run: |
