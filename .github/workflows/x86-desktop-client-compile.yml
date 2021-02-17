@@ -26,15 +26,11 @@ jobs:
       - name: Setup msbuild.exe
         uses: microsoft/setup-msbuild@v1.0.2
   
-      - name: Set up Visual Studio shell
-        uses: egor-tensin/vs-shell@v2
-        with:
-          arch: x86   
-
       - name: Install Third Parties
         run: |
           python --version
           rm -rf "C:/hostedtoolcache/windows/Python"
+          dir "C:/hostedtoolcache/windows"
           cd ThirdParty
           curl -o strawberry.zip -LO https://strawberryperl.com/download/5.32.1.1/strawberry-perl-5.32.1.1-64bit-portable.zip
           unzip -q strawberry.zip -d Strawberry          
@@ -71,9 +67,16 @@ jobs:
           git checkout 9f2a7bb1
           git apply ../patches/gyp.diff
     
+#      - name: Set up Visual Studio shell
+#        uses: egor-tensin/vs-shell@v2
+#        with:
+#          arch: x86   
+          
       - name: Install Libraries
         run: |           
           SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\NASM\nasm-2.15.05;%cd%\ThirdParty\Python27;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
+          python --version
+          "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars32.bat"
           python --version
           cd Libraries
           SET LibrariesPath=%cd%
