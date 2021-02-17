@@ -45,6 +45,7 @@ jobs:
     
       - name: Install Third Parties
         run: |
+          python --version
           cd ThirdParty
           curl -o strawberry.zip -LO https://strawberryperl.com/download/5.32.1.1/strawberry-perl-5.32.1.1-64bit-portable.zip
           unzip -q strawberry.zip -d Strawberry          
@@ -170,8 +171,8 @@ jobs:
           SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\NASM\nasm-2.15.05;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
           SET LibrariesPath=%cd%\Libraries 
           cd wallet-desktop\Wallet
+          python --version
           call configure.bat -D DESKTOP_APP_USE_PACKAGED=OFF
-          echo START BUILD
           cd ..\out
           msbuild Wallet.sln /property:Configuration=Release /p:platform=win32
      
