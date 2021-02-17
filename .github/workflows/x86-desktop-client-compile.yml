@@ -37,12 +37,7 @@ jobs:
         uses: egor-tensin/vs-shell@v2
         with:
           arch: x86
-
-      - uses: actions/setup-python@v2
-        with:
-          python-version: '2.7.18'
-          architecture: 'x86'
-    
+   
       - name: Install Third Parties
         run: |
           python --version
@@ -50,6 +45,10 @@ jobs:
           curl -o strawberry.zip -LO https://strawberryperl.com/download/5.32.1.1/strawberry-perl-5.32.1.1-64bit-portable.zip
           unzip -q strawberry.zip -d Strawberry          
           del strawberry.zip
+          
+          curl -o install.msi https://www.python.org/ftp/python/2.7.8/python-2.7.8.amd64.msi
+          msiexec /i install.msi /quiet /qn /norestart TARGETDIR="%cd%\Python27"
+          del install.msi
           
           curl -o cmake.zip -LO https://github.com/Kitware/CMake/releases/download/v3.19.4/cmake-3.19.4-win64-x64.zip
           unzip -q cmake.zip -d cmake   
@@ -80,7 +79,7 @@ jobs:
     
       - name: Install Libraries
         run: |           
-          SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\NASM\nasm-2.15.05;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
+          SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\NASM\nasm-2.15.05;%cd%\ThirdParty\Python27;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
           
           cd Libraries
           SET LibrariesPath=%cd%
@@ -168,7 +167,7 @@ jobs:
           
       - name: Configure wallet desktop
         run: |           
-          SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\NASM\nasm-2.15.05;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
+          SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\NASM\nasm-2.15.05;%cd%\ThirdParty\Python27;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
           SET LibrariesPath=%cd%\Libraries 
           cd wallet-desktop\Wallet
           python --version
