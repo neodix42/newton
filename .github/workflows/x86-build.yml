@@ -20,6 +20,8 @@ jobs:
         
       - name: Setup msbuild.exe
         uses: microsoft/setup-msbuild@v1.0.2
+        with:
+          vs-version: '15.9'
   
       - name: Set up Visual Studio shell
         uses: egor-tensin/vs-shell@v2
