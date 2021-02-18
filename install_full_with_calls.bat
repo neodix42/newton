@@ -55,22 +55,13 @@ cd ..
 git clone --branch 0.10.0 https://github.com/ericniebler/range-v3 range-v3
 
 
+copy ..\zlib.zip .
+unzip -q zlib.zip -d zlib
+dir zlib
 
-git clone https://github.com/desktop-app/zlib.git
-cd zlib\contrib\vstudio\vc14
-msbuild zlibstat.vcxproj /property:Configuration=Debug
-msbuild zlibstat.vcxproj /property:Configuration=ReleaseWithoutAsm
-cd ..\..\..\..
-
-dir "D:\a\win-cppcheck\win-cppcheck\Libraries\zlib\contrib\vstudio\vc14"
-tree "D:\a\win-cppcheck\win-cppcheck\Libraries\zlib\contrib\vstudio\vc14"
-
-
-git clone https://github.com/desktop-app/lzma.git
-cd lzma\C\Util\LzmaLib
-msbuild LzmaLib.sln /property:Configuration=Debug
-msbuild LzmaLib.sln /property:Configuration=Release
-cd ..\..\..\..
+copy ..\lzma.zip .
+unzip -q lzma.zip -d lzma
+dir lzma
 
 
 git clone https://github.com/openssl/openssl.git openssl_1_1_1
