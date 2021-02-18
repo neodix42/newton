@@ -85,22 +85,9 @@ move libssl.lib out32
 move ossl_static.pdb out32
 cd ..
 
-git clone https://github.com/google/breakpad
-cd breakpad
-git checkout a1dbcdcb43
-git apply ../patches/breakpad.diff
-cd src
-git clone https://github.com/google/googletest testing
-cd client\windows
-call gyp --no-circular-check breakpad_client.gyp --format=ninja
-cd ..\..
-ninja -C out/Debug common crash_generation_client exception_handler
-ninja -C out/Release common crash_generation_client exception_handler
-cd tools\windows\dump_syms
-call gyp dump_syms.gyp
-msbuild dump_syms.vcxproj /property:Configuration=Release /p:platform=x86
-cd ..\..\..\..\..
-
+copy ..\breakpad.zip .
+unzip -q breakpad.zip -d breakpad
+dir breakpad
 
 git clone git://code.qt.io/qt/qt5.git qt_5_12_8
 cd qt_5_12_8
