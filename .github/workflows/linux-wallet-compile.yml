@@ -8,9 +8,17 @@ jobs:
 
     steps:
       - name: Check out current repository
-        uses: actions/checkout@v2
-        
-      - name: Create directories
+        uses: actions/checkout@v2        
+      - name: Compile linux desktop wallet
         run: |
           sudo chmod +x compile.sh
           sudo ./compile.sh
+      - name: Find & copy binaries
+        run: |
+          mkdir artifacts
+          cp wallet-desktop/out/Release/bin/Wallet artifacts
+      - name: Upload artifacts
+        uses: actions/upload-artifact@master
+        with:
+          name: newton-linux-desktop-wallet
+          path: artifacts
