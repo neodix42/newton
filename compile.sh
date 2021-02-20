@@ -152,7 +152,18 @@ cmake -DTON_USE_ROCKSDB=OFF -DTON_USE_ABSEIL=OFF -DTON_ONLY_TONLIB=ON -DOPENSSL_
 make $MAKE_THREADS_CNT tonlib
 cd ../..
 
+cd wallet-desktop
 
+#dirty workaround
+sed -i '238d' cmake/external/qt/CMakeLists.txt
+sed -i '238d' cmake/external/qt/CMakeLists.txt
+sed -i '238d' cmake/external/qt/CMakeLists.txt
+sed -i '242d' cmake/external/qt/CMakeLists.txt
 
+cd Wallet
 
+./configure.sh -D DESKTOP_APP_USE_PACKAGED=OFF
 
+cd ../out/Release
+
+make $MAKE_THREADS_CNT
