@@ -193,5 +193,5 @@ cd ../out/Release
 
 make $MAKE_THREADS_CNT
 
-cd ../out/Release/bin
+cd bin
 tar -czvf Wallet.tar.gz Wallet
