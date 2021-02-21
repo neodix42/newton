@@ -16,7 +16,7 @@ jobs:
       - name: Find & copy binaries
         run: |
           mkdir artifacts
-          cp wallet-desktop/out/Release/bin/Wallet artifacts
+          cp wallet-desktop/out/Release/bin/Wallet.tar.gz artifacts
       - name: Upload artifacts
         uses: actions/upload-artifact@master
         with:
