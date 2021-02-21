@@ -1,1 +1,1 @@
-File can be found here [link](LICENCE)
+File can be found here [link](LICENSE)
