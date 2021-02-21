@@ -55,7 +55,11 @@ git checkout xkbcommon-0.8.4
 ./autogen.sh --disable-x11
 make $MAKE_THREADS_CNT
 make install
+
 cd ..
+
+pwd
+ls
 
 git clone https://github.com/google/googletest
 cd googletest
@@ -66,6 +70,9 @@ make
 cp lib/*.a /usr/lib
 
 cd ../..
+
+pwd
+ls
 
 git clone git://code.qt.io/qt/qt5.git qt_5_12_8
 cd qt_5_12_8
@@ -109,6 +116,9 @@ make $MAKE_THREADS_CNT
 make install
 cd ..
 
+pwd
+ls
+
 git clone https://chromium.googlesource.com/external/gyp
 cd gyp
 git checkout 9f2a7bb1
@@ -123,9 +133,16 @@ cd src/third_party/lss
 git checkout a91633d1
 cd ../../..
 
+pwd
+ls
+
 cp -R ../googletest/googletest src/testing/
 cp -R ../googletest/googlemock src/testing/
+
+ls -lart src/testing/
+
 cp src/tools/mac/symupload/minidump_upload.m src/tools/linux/symupload/
+ls src/tools/linux/symupload/
 
 make $MAKE_THREADS_CNT
 make install
@@ -135,6 +152,9 @@ cd ../../out/Default
 cmake .
 make $MAKE_THREADS_CNT dump_syms
 cd ../../..
+
+pwd
+ls
 
 git clone https://github.com/newton-blockchain/ton.git
 cd ton
@@ -150,7 +170,11 @@ mkdir build
 cd build
 cmake -DTON_USE_ROCKSDB=OFF -DTON_USE_ABSEIL=OFF -DTON_ONLY_TONLIB=ON -DOPENSSL_FOUND=1 -DOPENSSL_INCLUDE_DIR=/usr/local/desktop-app/openssl-1.1.1/include -DOPENSSL_CRYPTO_LIBRARY=/usr/local/desktop-app/openssl-1.1.1/lib/libcrypto.a -DTON_ARCH=`uname -m | sed --expression='s/_/-/g'` -DCMAKE_BUILD_TYPE=Release ..
 make $MAKE_THREADS_CNT tonlib
-cd ../..
+
+cd ../../..
+
+pwd
+ls
 
 cd wallet-desktop
 
