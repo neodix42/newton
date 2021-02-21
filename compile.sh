@@ -132,6 +132,7 @@ git clone https://chromium.googlesource.com/linux-syscall-support src/third_part
 cd src/third_party/lss
 git checkout a91633d1
 cd ../../..
+./configure
 
 pwd
 ls
