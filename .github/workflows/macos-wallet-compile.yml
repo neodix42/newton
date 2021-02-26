@@ -98,10 +98,17 @@ jobs:
         git clone https://chromium.googlesource.com/chromium/mini_chromium
         cd mini_chromium
         git checkout 7c5b0c1ab4
-        git apply ../../../../../patches/mini_chromium.diff
-        cd ../../gtest
+        git apply ../../../../patches/mini_chromium.diff
+        cd ../../gtest        
         git clone https://chromium.googlesource.com/external/github.com/google/googletest gtest
         cd gtest
+        git checkout d62d6c6556
+        cd ../../..
+
+        build/gyp_crashpad.py -Dmac_deployment_target=10.10
+        ninja -C out/Debug
+        ninja -C out/Release
+        cd ..
         git checkout d62d6c6556
         cd ../../..
 
