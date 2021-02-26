@@ -35,6 +35,7 @@ jobs:
         sudo chown -R $(whoami) /usr/local/opt
         echo doctor run
         brew doctor
+      continue-on-error: true 
 
     - name: Install wallet
       run: |
