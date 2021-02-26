@@ -22,16 +22,15 @@ jobs:
         cd Libraries/macos
         mv ../../xz-5.0.5.tar.gz .
         tar -xvf xz-5.0.5.tar.gz
-        ls -lart
-        cd ../..
-        ls -lart
     - name: Install wallet
       run: |
         MAKE_THREADS_CNT=-j8
         MACOSX_DEPLOYMENT_TARGET=10.12
 
         ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-        brew install automake cmake fdk-aac git lame libass libtool libvorbis libvpx ninja opus sdl shtool texi2html theora wget x264 xvid yasm pkg-config
+    - name: Install brew
+      run: |
+        brew install automake fdk-aac git lame libass libtool libvorbis libvpx ninja opus sdl shtool texi2html theora wget x264 xvid yasm pkg-config
 
         sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
         ls -altr
