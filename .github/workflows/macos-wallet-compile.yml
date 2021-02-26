@@ -31,11 +31,11 @@ jobs:
         sudo chown -R `whoami`:admin /usr/local/bin
         sudo chown -R `whoami`:admin /usr/local/share
         sudo chown -R `whoami`:admin /usr/local/opt
-        echo asdf
-        sudo chown -R $(whoami) /usr/local/opt
-        echo doctor run
-        brew doctor
-      continue-on-error: true 
+#      echo asdf
+#      sudo chown -R $(whoami) /usr/local/opt
+#      echo doctor run
+#      brew doctor
+#     continue-on-error: true 
 
     - name: Install wallet
       run: |
