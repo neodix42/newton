@@ -1,0 +1,67 @@
+name: MacOS Ton Desktop wallet compile
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: macos-10.15
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v2
+      with:
+        submodules: 'recursive'
+    - name: Check out ton wallet-desktop
+      uses: actions/checkout@v2
+      with:
+        repository: newton-blockchain/wallet-desktop
+        path: wallet-desktop
+    - name: Download and install third parties
+      run: |
+        mkdir -p Libraries/macos
+        cd Libraries/macos
+        curl -o xz-5.0.5.tar.gz http://tukaani.org/xz/xz-5.0.5.tar.gz
+        tar -xvf xz-5.0.5.tar.gz
+        ls -lart
+    - name: Install wallet
+      run: |
+        MAKE_THREADS_CNT=-j8
+        MACOSX_DEPLOYMENT_TARGET=10.12
+
+        ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+        brew install automake cmake fdk-aac git lame libass libtool libvorbis libvpx ninja opus sdl shtool texi2html theora wget x264 xvid yasm pkg-config
+
+        sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+        ls -altr
+        
+        mkdir ThirdParty
+        cd ThirdParty
+
+        git clone https://github.com/desktop-app/patches.git
+        cd patches
+        git checkout 10aeaf6
+        cd ../
+        git clone https://chromium.googlesource.com/external/gyp
+        git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
+        export PATH="$PWD/depot_tools:$PATH"
+        cd gyp
+        git checkout 9f2a7bb1
+        git apply ../patches/gyp.diff
+        ./setup.py build
+        sudo ./setup.py install
+        cd ../..
+
+        cd Libraries/macos
+        LibrariesPath=`pwd`
+        
+        git clone https://github.com/desktop-app/patches.git
+        cd patches
+        git checkout 10aeaf6
+        cd ..
+        git clone --branch 0.10.0 https://github.com/ericniebler/range-v3
+
+        cd xz-5.0.5
+        CFLAGS="-mmacosx-version-min=10.12" LDFLAGS="-mmacosx-version-min=10.12" ./configure --prefix=/usr/local/macos
+        make $MAKE_THREADS_CNT
+        sudo make install
+        cd ..
