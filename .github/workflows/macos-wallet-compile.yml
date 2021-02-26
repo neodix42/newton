@@ -22,13 +22,21 @@ jobs:
         cd Libraries/macos
         mv ../../xz-5.0.5.tar.gz .
         tar -xvf xz-5.0.5.tar.gz
-    - name: Install wallet
+
+    - name: Install homebrew
       run: |
         MAKE_THREADS_CNT=-j8
         MACOSX_DEPLOYMENT_TARGET=10.12
-
         ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-    - name: Install brew
+        sudo chown -R `whoami`:admin /usr/local/bin
+        sudo chown -R `whoami`:admin /usr/local/share
+        sudo chown -R `whoami`:admin /usr/local/opt
+        echo asdf
+        sudo chown -R $(whoami) /usr/local/opt
+        echo doctor run
+        brew doctor
+
+    - name: Install wallet
       run: |
         brew install automake fdk-aac git lame libass libtool libvorbis libvpx ninja opus sdl shtool texi2html theora wget x264 xvid yasm pkg-config
 
