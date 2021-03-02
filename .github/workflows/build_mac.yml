@@ -16,4 +16,5 @@ jobs:
         tar -xvf xz-5.0.5.tar.gz
     - name: Install MacOS wallet
       run: |
-        sudo build_mac.sh
+        chmod +x build_mac.sh
+        sudo ./build_mac.sh
