@@ -17,4 +17,4 @@ jobs:
     - name: Install MacOS wallet
       run: |
         chmod +x build_mac.sh
-        sudo ./build_mac.sh
+        ./build_mac.sh
