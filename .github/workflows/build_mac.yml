@@ -18,3 +18,14 @@ jobs:
       run: |
         chmod +x build_mac.sh
         ./build_mac.sh
+    - name: Find & copy binaries
+      run: |
+        mkdir artifacts
+        ls -lart wallet-desktop/out
+        ls -lart wallet-desktop/out/Release
+        cp wallet-desktop/out/Release/bin/Wallet artifacts
+    - name: Upload artifacts
+      uses: actions/upload-artifact@master
+      with:
+        name: newton-macos-desktop-wallet
+        path: artifacts
