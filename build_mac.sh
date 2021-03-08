@@ -132,3 +132,26 @@ cd ../../wallet-desktop/Wallet/
 ./configure.sh -D DESKTOP_APP_USE_PACKAGED=OFF
 
 git apply ../install/wallet.patch
+
+ls -lart
+
+cd ../out
+
+xcodebuild -list -project Wallet.xcodeproj
+
+echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+xcodebuild -scheme macOS  build
+
+echo aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+xcodebuild -scheme macOS -configuration Release build
+
+echo bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+
+xcodebuild -scheme macOS -configuration Release
+
+echo cccccccccccccccccccccccccccccccccccccc 
+xcodebuild -scheme macOS clean build CONFIGURATION_BUILD_DIR=/tmp/
+
+ls -lart /tmp
