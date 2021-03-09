@@ -141,17 +141,17 @@ xcodebuild -list -project Wallet.xcodeproj
 
 echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-xcodebuild -scheme macOS  build
+xcodebuild -scheme Wallet  build
 
 echo aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
-xcodebuild -scheme macOS -configuration Release build
+xcodebuild -scheme Wallet -configuration Release build
 
 echo bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
 
-xcodebuild -scheme macOS -configuration Release
+xcodebuild -scheme Wallet -configuration Release
 
 echo cccccccccccccccccccccccccccccccccccccc 
-xcodebuild -scheme macOS clean build CONFIGURATION_BUILD_DIR=/tmp/
+xcodebuild -scheme Wallet clean build CONFIGURATION_BUILD_DIR=/tmp/
 
 ls -lart /tmp
