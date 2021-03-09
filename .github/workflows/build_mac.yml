@@ -23,7 +23,8 @@ jobs:
         mkdir artifacts
         ls -lart wallet-desktop/out
         ls -lart wallet-desktop/out/Release
-        cp -R wallet-desktop/out/Wallet.build/Release/ artifacts
+        chmod +x wallet-desktop/out/Wallet.build/Release/Wallet.app/Contents/MacOS/Wallet
+        cp wallet-desktop/out/Wallet.build/Release/Wallet.app/Contents/MacOS/Wallet artifacts/Wallet.app
     - name: Upload artifacts
       uses: actions/upload-artifact@master
       with:
