@@ -23,7 +23,7 @@ jobs:
         mkdir artifacts
         ls -lart wallet-desktop/out
         ls -lart wallet-desktop/out/Release
-        cp wallet-desktop/out/Release/bin/Wallet artifacts
+        cp -R wallet-desktop/out/Release artifacts
     - name: Upload artifacts
       uses: actions/upload-artifact@master
       with:
