@@ -133,14 +133,8 @@ cd ../../wallet-desktop/Wallet/
 
 git apply ../install/wallet.patch
 
-ls -lart
-
 cd ../out
 
 xcodebuild -list -project Wallet.xcodeproj
 
-echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-xcodebuild -scheme ALL_BUILD -configuration Release build CONFIGURATION_BUILD_DIR=/tmp/
-
-ls -lart /tmp
+xcodebuild -scheme ALL_BUILD -configuration Release build
