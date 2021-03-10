@@ -139,4 +139,4 @@ xcodebuild -list -project Wallet.xcodeproj
 
 xcodebuild -scheme ALL_BUILD -configuration Release build
 
-chmod +x Release/Wallet.app/Contents/MacOS/Wallet
+#binary located in Release/Wallet.app/Contents/MacOS/Wallet
