@@ -138,3 +138,5 @@ cd ../out
 xcodebuild -list -project Wallet.xcodeproj
 
 xcodebuild -scheme ALL_BUILD -configuration Release build
+
+chmod +x Release/Wallet.app/Contents/MacOS/Wallet
