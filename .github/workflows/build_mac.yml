@@ -8,12 +8,6 @@ jobs:
       uses: actions/checkout@v2
       with:
         submodules: 'recursive'
-    - name: Install xz-5.0.5.tar.gz
-      run: |
-        mkdir -p Libraries/macos
-        cd Libraries/macos
-        mv ../../xz-5.0.5.tar.gz .
-        tar -xvf xz-5.0.5.tar.gz
     - name: Install MacOS wallet
       run: |
         chmod +x build_mac.sh
@@ -21,10 +15,6 @@ jobs:
     - name: Find & copy binaries
       run: |
         mkdir artifacts
-        ls -lart wallet-desktop/out
-        ls -lart wallet-desktop/out/Release
-        ls -lart wallet-desktop/out/Release/Wallet.app
-        chmod +x wallet-desktop/out/Release/Wallet.app/Contents/MacOS/Wallet
         cp wallet-desktop/out/Release/Wallet.app/Contents/MacOS/Wallet artifacts/Wallet.app
     - name: Upload artifacts
       uses: actions/upload-artifact@master
