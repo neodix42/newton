@@ -15,7 +15,8 @@ jobs:
     - name: Find & copy binaries
       run: |
         mkdir artifacts
-        cp wallet-desktop/out/Release/Wallet.app/Contents/MacOS/Wallet artifacts/Wallet.app
+        chmod +x wallet-desktop/out/Release/Wallet.app/Contents/MacOS/Wallet
+        cp wallet-desktop/out/Release/Wallet.app/Contents/MacOS/Wallet artifacts/
     - name: Upload artifacts
       uses: actions/upload-artifact@master
       with:
