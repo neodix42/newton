@@ -16,6 +16,7 @@ jobs:
       run: |
         mkdir artifacts
         chmod a+x wallet-desktop/out/Release/Wallet.app/Contents/MacOS/Wallet
+        chmod -R 777 wallet-desktop/out/Release/Wallet.app
         cp -R wallet-desktop/out/Release/Wallet.app artifacts/
     - name: Upload artifacts
       uses: actions/upload-artifact@master
