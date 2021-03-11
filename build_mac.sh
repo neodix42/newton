@@ -137,4 +137,4 @@ cd ../out
 
 xcodebuild -list -project Wallet.xcodeproj
 
-xcodebuild -scheme ALL_BUILD -configuration Release
+xcodebuild -scheme ALL_BUILD -configuration Release build
