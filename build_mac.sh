@@ -137,6 +137,4 @@ cd ../out
 
 xcodebuild -list -project Wallet.xcodeproj
 
-xcodebuild -scheme ALL_BUILD -configuration Release build
-
-#binary located in Release/Wallet.app/Contents/MacOS/Wallet
+xcodebuild -scheme ALL_BUILD -configuration Release
