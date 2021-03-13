@@ -8,7 +8,7 @@ brew install automake cmake fdk-aac git lame libass libtool libvorbis libvpx nin
 
 sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
 
-git clone --recursive https://github.com/ashulepov/wallet-desktop.git
+git clone --recursive https://github.com/newton-blockchain/wallet-desktop.git
 
 mkdir ThirdParty
 cd ThirdParty
@@ -60,7 +60,6 @@ git checkout OpenSSL_1_1_1-stable
 ./Configure --prefix=/usr/local/macos darwin64-x86_64-cc -static -mmacosx-version-min=10.12
 make build_libs $MAKE_THREADS_CNT
 cd ..
-
 
 git clone https://chromium.googlesource.com/crashpad/crashpad.git
 cd crashpad
