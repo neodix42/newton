@@ -76,7 +76,7 @@ cd gtest
 git checkout d62d6c6556
 cd ../../..
 
-git apply ../../../wallet-desktop/crashpad.patch
+git apply ../../../wallet-desktop/../crashpad.patch
 
 build/gyp_crashpad.py -Dmac_deployment_target=10.10
 ninja -C out/Debug
@@ -130,7 +130,7 @@ cd ../..
 cd ../../wallet-desktop/Wallet/
 ./configure.sh -D DESKTOP_APP_USE_PACKAGED=OFF
 
-git apply ../wallet.patch
+git apply ../../wallet.patch
 
 cd ../out
 
