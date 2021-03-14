@@ -10,7 +10,7 @@ sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
 
 git clone --recursive https://github.com/newton-blockchain/wallet-desktop.git
 
-cd Wallet\ThirdParty\rlottie
+cd Wallet/ThirdParty/rlottie
 
 git fetch
 git checkout master
