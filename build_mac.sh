@@ -8,6 +8,8 @@ brew install automake cmake fdk-aac git lame libass libtool libvorbis libvpx nin
 
 sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
 
+rootPath=`pwd`
+
 git clone --recursive https://github.com/newton-blockchain/wallet-desktop.git
 
 cd wallet-desktop/Wallet/ThirdParty/rlottie
@@ -16,6 +18,7 @@ git fetch
 git checkout master
 git pull
 git branch
+cat src/vector/freetype/v_ft_raster.cpp
 cd ..
 
 mkdir ThirdParty
@@ -84,7 +87,9 @@ cd gtest
 git checkout d62d6c6556
 cd ../../..
 
-git apply ../../../wallet-desktop/../crashpad.patch
+pwd 
+
+git apply $rootPath/crashpad.patch
 
 build/gyp_crashpad.py -Dmac_deployment_target=10.10
 ninja -C out/Debug
@@ -135,10 +140,13 @@ cmake -DTON_USE_ROCKSDB=OFF -DTON_USE_ABSEIL=OFF -DTON_ARCH= -DTON_ONLY_TONLIB=O
 make $MAKE_THREADS_CNT tonlib
 cd ../..
 
-cd ../../wallet-desktop/Wallet/
+pwd 
+echo $rootPath
+
+cd $rootPath/wallet-desktop/Wallet/
 ./configure.sh -D DESKTOP_APP_USE_PACKAGED=OFF
 
-git apply ../../wallet.patch
+git apply $rootPath/wallet.patch
 
 cd ../out
 
