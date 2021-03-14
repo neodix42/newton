@@ -13,13 +13,13 @@ rootPath=`pwd`
 git clone --recursive https://github.com/newton-blockchain/wallet-desktop.git
 
 cd wallet-desktop/Wallet/ThirdParty/rlottie
-
 git fetch
 git checkout master
 git pull
 git branch
 cat src/vector/freetype/v_ft_raster.cpp
-cd ..
+
+cd $rootPath
 
 mkdir ThirdParty
 cd ThirdParty
@@ -88,7 +88,7 @@ git checkout d62d6c6556
 cd ../../..
 
 pwd 
-
+echo apply crashpad.patch
 git apply $rootPath/crashpad.patch
 
 build/gyp_crashpad.py -Dmac_deployment_target=10.10
@@ -146,6 +146,7 @@ echo $rootPath
 cd $rootPath/wallet-desktop/Wallet/
 ./configure.sh -D DESKTOP_APP_USE_PACKAGED=OFF
 
+echo apply wallet.patch
 git apply $rootPath/wallet.patch
 
 cd ../out
