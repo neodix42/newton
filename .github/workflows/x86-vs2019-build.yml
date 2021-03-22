@@ -18,7 +18,7 @@ jobs:
       - name: Check out current repository
         uses: actions/checkout@v2
         
-      - name: Install visual studio 2019
+      - name: Install visual studio 2019 - I
         run: | 
             curl -L --output vs_Community.exe https://aka.ms/vs/16/release/vs_Community.exe
             vs_community.exe --layout C:\VS ^
@@ -27,7 +27,8 @@ jobs:
             --add Microsoft.VisualStudio.Workload.ManagedDesktop ^
             --add Component.GitHub.VisualStudio ^
             --includeRecommended
-            
+      - name: Install visual studio 2019 - II
+        run: | 
             cd C:\VS
             vs_setup.exe --nocache --wait --noUpdateInstaller --noWeb --add Microsoft.VisualStudio.Workload.NativeDesktop;includeRecommended --quiet --norestart
             
