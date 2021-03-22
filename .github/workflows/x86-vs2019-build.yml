@@ -18,19 +18,18 @@ jobs:
       - name: Check out current repository
         uses: actions/checkout@v2
         
-      - name: Install visual studio 2019
-        run: | 
-            choco install visualstudio2019community
+#      - name: Install visual studio 2019
+#        run: | 
+#            choco install visualstudio2019community
 
-      - name: Run batch file
-        run: |
-          dir "C:\Program Files (x86)\Microsoft Visual Studio\"
-          dir "C:\Program Files (x86)\Microsoft Visual Studio\2019\"
-          dir "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community"
-#          "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars32.bat"
-        
-#      - name: Setup msbuild.exe
-#        uses: microsoft/setup-msbuild@v1.0.2
+#      - name: Run batch file
+#        run: |
+#          dir "C:\Program Files (x86)\Microsoft Visual Studio\"
+#          dir "C:\Program Files (x86)\Microsoft Visual Studio\2019\"
+#          dir "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community"
+
+      - name: Setup msbuild.exe
+        uses: microsoft/setup-msbuild@v1.0.2
   
       - name: Set up Visual Studio shell
         uses: egor-tensin/vs-shell@v2
