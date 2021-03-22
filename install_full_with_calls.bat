@@ -39,7 +39,7 @@ git apply ../patches/gyp.diff
 cd ..\..
 
 
-SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\NASM\nasm-2.15.05;%cd%\ThirdParty\Python27;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
+SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\NASM\nasm-2.15.05;%cd%\ThirdParty\Python27;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\cmake-3.19.4-win64-x64\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
 echo %PATH%
 
 cd Libraries
@@ -55,13 +55,18 @@ cd ..
 git clone --branch 0.10.0 https://github.com/ericniebler/range-v3 range-v3
 
 
-copy ..\zlib.zip .
-unzip -q zlib.zip -d zlib
-dir zlib
+git clone https://github.com/desktop-app/zlib.git
+cd zlib\contrib\vstudio\vc14
+msbuild zlibstat.vcxproj /property:Configuration=Debug
+msbuild zlibstat.vcxproj /property:Configuration=ReleaseWithoutAsm
+cd ..\..\..\..
 
-copy ..\lzma.zip .
-unzip -q lzma.zip -d lzma
-dir lzma
+
+git clone https://github.com/desktop-app/lzma.git
+cd lzma\C\Util\LzmaLib
+msbuild LzmaLib.sln /property:Configuration=Debug
+msbuild LzmaLib.sln /property:Configuration=Release
+cd ..\..\..\..
 
 
 git clone https://github.com/openssl/openssl.git openssl_1_1_1
@@ -85,9 +90,21 @@ move libssl.lib out32
 move ossl_static.pdb out32
 cd ..
 
-copy ..\breakpad.zip .
-unzip -q breakpad.zip -d breakpad
-dir breakpad
+git clone https://github.com/google/breakpad
+cd breakpad
+git checkout a1dbcdcb43
+git apply ../patches/breakpad.diff
+cd src
+git clone https://github.com/google/googletest testing
+cd client\windows
+call gyp --no-circular-check breakpad_client.gyp --format=ninja
+cd ..\..
+ninja -C out/Debug common crash_gneeration_client exception_handler
+ninja -C out/Release common crash_generation_client exception_handler
+cd tools\windows\dump_syms
+call gyp dump_syms.gyp
+msbuild dump_syms.vcxproj /property:Configuration=Release /p:platform=x86
+cd ..\..\..\..\..
 
 git clone git://code.qt.io/qt/qt5.git qt_5_12_8
 cd qt_5_12_8
@@ -126,6 +143,6 @@ cd wallet-desktop\Wallet
 python --version
 call configure.bat -D DESKTOP_APP_USE_PACKAGED=OFF
 cd ..\out
-msbuild Wallet.sln /property:Configuration=Release /p:platform=win32
+msbuild Wallet.sln /property:Configuration=Debug /p:platform=win32
 
-dir Release
+dir Debug
