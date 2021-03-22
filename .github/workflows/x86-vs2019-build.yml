@@ -20,7 +20,7 @@ jobs:
         
       - name: Install visual studio 2019
         run: | 
-            curl -o vs_Community.exe https://aka.ms/vs/16/release/vs_Community.exe
+            curl -L --output vs_Community.exe https://aka.ms/vs/16/release/vs_Community.exe
             vs_community.exe --layout C:\VS ^
             --lang en-US ^
             --add Microsoft.VisualStudio.Workload.NativeDesktop ^
