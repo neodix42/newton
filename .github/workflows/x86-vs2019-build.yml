@@ -25,8 +25,9 @@ jobs:
       - name: Run batch file
         run: |
           dir "C:\Program Files (x86)\Microsoft Visual Studio\"
-          dir "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build"
-          "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars32.bat"
+          dir "C:\Program Files (x86)\Microsoft Visual Studio\2019\"
+          dir "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community"
+#          "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars32.bat"
         
 #      - name: Setup msbuild.exe
 #        uses: microsoft/setup-msbuild@v1.0.2
