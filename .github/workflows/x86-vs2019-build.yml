@@ -1,0 +1,52 @@
+name: C/C++ CI bat Windows x86
+on: [push]
+
+defaults:
+   run:
+    shell: cmd
+    
+jobs:
+  build:
+
+    runs-on: windows-2019
+
+    steps:
+      - name: Get Current OS version
+        run: |
+          systeminfo | findstr /B /C:"OS Name" /C:"OS Version"
+
+      - name: Check out current repository
+        uses: actions/checkout@v2
+        
+      - name: Install visual studio 2019
+        run: | 
+            curl -o vs_Community.exe https://aka.ms/vs/16/release/vs_Community.exe
+            vs_community.exe --layout C:\VS ^
+            --lang en-US ^
+            --add Microsoft.VisualStudio.Workload.NativeDesktop ^
+            --add Microsoft.VisualStudio.Workload.ManagedDesktop ^
+            --add Component.GitHub.VisualStudio ^
+            --includeRecommended
+            
+            cd C:\VS
+            vs_setup.exe --nocache --wait --noUpdateInstaller --noWeb --add Microsoft.VisualStudio.Workload.NativeDesktop;includeRecommended --quiet --norestart
+            
+            dir "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build"         
+        
+      - name: Run batch file
+        run: |
+          dir "C:\Program Files (x86)\Microsoft Visual Studio\"
+          dir "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build"
+          "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars32.bat"
+        
+#      - name: Setup msbuild.exe
+#        uses: microsoft/setup-msbuild@v1.0.2
+  
+      - name: Set up Visual Studio shell
+        uses: egor-tensin/vs-shell@v2
+        with:
+          arch: x86   
+          
+      - name: Run batch file
+        run:  |
+          install_full_with_calls.bat
