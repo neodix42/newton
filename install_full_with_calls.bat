@@ -163,6 +163,6 @@ git apply variant.patch
 cd ..\..
 
 cd ..\out
-msbuild Wallet.sln /property:Configuration=Debug /p:platform=win32 /p:PlatformToolset=v142
+msbuild Wallet.sln /property:Configuration=Debug /p:platform=win32 /p:PlatformToolset=v142 /p:WindowsTargetPlatformVersion=10.0.19041.0
 
 dir Debug
