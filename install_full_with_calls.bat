@@ -1,5 +1,7 @@
 REM Execute this batch file in x86 Native Tools Command Prompt for VS 2019 console
-REM If you have a Community edition then update the path to VS 2019 below C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional
+REM If you have an Enterprise edition then update the path below C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional
+
+set root=%cd%
 
 mkdir ThirdParty
 mkdir Libraries
@@ -45,7 +47,6 @@ cd ..\..
 
 
 SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\NASM\nasm-2.15.05;%cd%\ThirdParty\Python27;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\cmake-3.19.4-win64-x64\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
-echo %PATH%
 
 cd Libraries
 SET LibrariesPath=%cd%
@@ -57,7 +58,8 @@ git clone https://github.com/desktop-app/patches.git
 cd patches
 git checkout 10aeaf6
 cd ..
-git clone --branch 0.10.0 https://github.com/ericniebler/range-v3 range-v3
+rem git clone --branch 0.10.0 https://github.com/ericniebler/range-v3 range-v3
+git clone https://github.com/ericniebler/range-v3 range-v3
 
 git clone https://github.com/openssl/openssl.git openssl_1_1_1
 cd openssl_1_1_1
@@ -83,15 +85,15 @@ cd ..
 
 git clone https://github.com/desktop-app/zlib.git
 cd zlib\contrib\vstudio\vc14
-msbuild zlibstat.vcxproj /property:Configuration=Debug
-msbuild zlibstat.vcxproj /property:Configuration=ReleaseWithoutAsm
+msbuild zlibstat.vcxproj /property:Configuration=Debug /p:PlatformToolset=v142
+msbuild zlibstat.vcxproj /property:Configuration=ReleaseWithoutAsm /p:PlatformToolset=v142
 cd ..\..\..\..
 
 
 git clone https://github.com/desktop-app/lzma.git
 cd lzma\C\Util\LzmaLib
-msbuild LzmaLib.sln /property:Configuration=Debug
-msbuild LzmaLib.sln /property:Configuration=Release
+msbuild LzmaLib.sln /property:Configuration=Debug /p:PlatformToolset=v142
+msbuild LzmaLib.sln /property:Configuration=Release /p:PlatformToolset=v142
 cd ..\..\..\..
 
 
@@ -108,8 +110,8 @@ ninja -C out/Debug common crash_generation_client exception_handler
 ninja -C out/Release common crash_generation_client exception_handler
 cd tools\windows\dump_syms
 call gyp dump_syms.gyp
-msbuild dump_syms.vcxproj /property:Configuration=Release
-msbuild dump_syms.vcxproj /property:Configuration=Debug
+msbuild dump_syms.vcxproj /property:Configuration=Debug /p:PlatformToolset=v142
+msbuild dump_syms.vcxproj /property:Configuration=Release /p:PlatformToolset=v142
 cd ..\..\..\..\..
 
 
@@ -148,8 +150,19 @@ git clone --recursive https://github.com/newton-blockchain/wallet-desktop.git
 
 cd wallet-desktop\Wallet
 
+cd lib_storage
+copy %root%\lib_storage.patch .
+git apply lib_storage.patch
+cd ..
+
+cd ThirdParty\variant
+copy %root%\variant.patch .
+git apply variant.patch
+
+cd ..\..
+
 call configure.bat -D DESKTOP_APP_USE_PACKAGED=OFF
 cd ..\out
-msbuild Wallet.sln /property:Configuration=Debug /p:platform=win32
+msbuild Wallet.sln /property:Configuration=Debug /p:platform=win32 /p:PlatformToolset=v142
 
 dir Debug
