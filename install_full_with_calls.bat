@@ -161,9 +161,9 @@ cd ThirdParty\variant
 copy %root%\variant.patch .
 git apply variant.patch
 
-cd %root%
-rem free up space
-rm -rf ThirdParty\Strawberry
+rem free up disc space, git actions windows server 2019 has 14GB limit
+rm -rf %root%\ThirdParty\Strawberry
+rm -rf %root%\Libraries\openssl_1_1_1\test
 
 cd %root%\wallet-desktop\out
 
