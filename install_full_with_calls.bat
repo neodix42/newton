@@ -165,8 +165,6 @@ cd ..\..
 
 cd ..\out
 
-rm -rf %LibrariesPath%\qt_5_12_8
-
 msbuild Wallet.sln /property:Configuration=Debug /p:platform=win32 /p:PlatformToolset=v142 /p:WindowsTargetPlatformVersion=10.0.19041.0 /p:Zc=preprocessor
 
 dir Debug
