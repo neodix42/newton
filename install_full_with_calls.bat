@@ -1,5 +1,5 @@
-REM Execute this batch file in x86 Native Tools Command Prompt for VS 2019 console
-REM If you have an Enterprise edition then update the path below C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional
+REM Execute this batch file in "x86 Native Tools Command Prompt for VS 2019" console
+REM If you have a Professional or Community edition then update the path below C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise
 
 set root=%cd%
 
@@ -45,7 +45,6 @@ git checkout 9f2a7bb1
 git apply ../patches/gyp.diff
 cd ..\..
 
-
 SET PATH=%cd%\ThirdParty\Strawberry\perl\bin;%cd%\ThirdParty\NASM\nasm-2.15.05;%cd%\ThirdParty\Python27;%cd%\ThirdParty\jom;%cd%\ThirdParty\cmake\cmake-3.19.4-win64-x64\bin;%cd%\ThirdParty\yasm;%cd%\ThirdParty\gyp;%cd%\ThirdParty\Ninja;%PATH%
 
 cd Libraries
@@ -58,6 +57,7 @@ git clone https://github.com/desktop-app/patches.git
 cd patches
 git checkout 10aeaf6
 cd ..
+
 git clone --branch 0.10.0 https://github.com/ericniebler/range-v3 range-v3
 
 git clone https://github.com/openssl/openssl.git openssl_1_1_1
@@ -84,15 +84,15 @@ cd ..
 
 git clone https://github.com/desktop-app/zlib.git
 cd zlib\contrib\vstudio\vc14
-msbuild zlibstat.vcxproj /property:Configuration=Debug /p:PlatformToolset=v142
-msbuild zlibstat.vcxproj /property:Configuration=ReleaseWithoutAsm /p:PlatformToolset=v142
+msbuild zlibstat.vcxproj /property:Configuration=Debug /p:PlatformToolset=v142 /p:platform=x86 /p:WindowsTargetPlatformVersion=10.0.19041.0
+msbuild zlibstat.vcxproj /property:Configuration=ReleaseWithoutAsm /p:PlatformToolset=v142 /p:platform=x86 /p:WindowsTargetPlatformVersion=10.0.19041.0
 cd ..\..\..\..
 
 
 git clone https://github.com/desktop-app/lzma.git
 cd lzma\C\Util\LzmaLib
-msbuild LzmaLib.sln /property:Configuration=Debug /p:PlatformToolset=v142
-msbuild LzmaLib.sln /property:Configuration=Release /p:PlatformToolset=v142
+msbuild LzmaLib.sln /property:Configuration=Debug /p:PlatformToolset=v142 /p:platform=x86 /p:WindowsTargetPlatformVersion=10.0.19041.0
+msbuild LzmaLib.sln /property:Configuration=Release /p:PlatformToolset=v142 /p:platform=x86 /p:WindowsTargetPlatformVersion=10.0.19041.0
 cd ..\..\..\..
 
 
@@ -109,8 +109,8 @@ ninja -C out/Debug common crash_generation_client exception_handler
 ninja -C out/Release common crash_generation_client exception_handler
 cd tools\windows\dump_syms
 call gyp dump_syms.gyp
-msbuild dump_syms.vcxproj /property:Configuration=Debug /p:PlatformToolset=v142
-msbuild dump_syms.vcxproj /property:Configuration=Release /p:PlatformToolset=v142
+msbuild dump_syms.vcxproj /property:Configuration=Debug /p:PlatformToolset=v142 /p:platform=x86 /p:WindowsTargetPlatformVersion=10.0.19041.0
+msbuild dump_syms.vcxproj /property:Configuration=Release /p:PlatformToolset=v142 /p:platform=x86 /p:WindowsTargetPlatformVersion=10.0.19041.0
 cd ..\..\..\..\..
 
 
@@ -163,6 +163,6 @@ git apply variant.patch
 cd ..\..
 
 cd ..\out
-msbuild Wallet.sln /property:Configuration=Debug /p:platform=win32 /p:PlatformToolset=v142 /p:WindowsTargetPlatformVersion=10.0.19041.0
+msbuild Wallet.sln /property:Configuration=Debug /p:platform=win32 /p:PlatformToolset=v142 /p:WindowsTargetPlatformVersion=10.0.19041.0 /p:Zc=preprocessor
 
 dir Debug
