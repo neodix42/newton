@@ -85,14 +85,14 @@ cd ..
 git clone https://github.com/desktop-app/zlib.git
 cd zlib\contrib\vstudio\vc14
 msbuild zlibstat.vcxproj /property:Configuration=Debug /p:PlatformToolset=v142 /p:platform=x86 /p:WindowsTargetPlatformVersion=10.0.19041.0
-rem msbuild zlibstat.vcxproj /property:Configuration=ReleaseWithoutAsm /p:PlatformToolset=v142 /p:platform=x86 /p:WindowsTargetPlatformVersion=10.0.19041.0
+msbuild zlibstat.vcxproj /property:Configuration=ReleaseWithoutAsm /p:PlatformToolset=v142 /p:platform=x86 /p:WindowsTargetPlatformVersion=10.0.19041.0
 cd ..\..\..\..
 
 
 git clone https://github.com/desktop-app/lzma.git
 cd lzma\C\Util\LzmaLib
 msbuild LzmaLib.sln /property:Configuration=Debug /p:PlatformToolset=v142 /p:platform=x86 /p:WindowsTargetPlatformVersion=10.0.19041.0
-rem msbuild LzmaLib.sln /property:Configuration=Release /p:PlatformToolset=v142 /p:platform=x86 /p:WindowsTargetPlatformVersion=10.0.19041.0
+msbuild LzmaLib.sln /property:Configuration=Release /p:PlatformToolset=v142 /p:platform=x86 /p:WindowsTargetPlatformVersion=10.0.19041.0
 cd ..\..\..\..
 
 
@@ -110,7 +110,7 @@ ninja -C out/Release common crash_generation_client exception_handler
 cd tools\windows\dump_syms
 call gyp dump_syms.gyp
 msbuild dump_syms.vcxproj /property:Configuration=Debug /p:PlatformToolset=v142 /p:platform=x86 /p:WindowsTargetPlatformVersion=10.0.19041.0
-rem msbuild dump_syms.vcxproj /property:Configuration=Release /p:PlatformToolset=v142 /p:platform=x86 /p:WindowsTargetPlatformVersion=10.0.19041.0
+msbuild dump_syms.vcxproj /property:Configuration=Release /p:PlatformToolset=v142 /p:platform=x86 /p:WindowsTargetPlatformVersion=10.0.19041.0
 cd ..\..\..\..\..
 
 
@@ -122,7 +122,7 @@ git submodule update --init qtbase
 git submodule update --init qtimageformats
 
 
-call configure -prefix "%LibrariesPath%\Qt-5.12.8" -debug -force-debug-info -opensource -confirm-license -static -static-runtime -I "%LibrariesPath%\openssl_1_1_1\include" -no-opengl -openssl-linked OPENSSL_LIBS_DEBUG="%LibrariesPath%\openssl_1_1_1\out32.dbg\libssl.lib %LibrariesPath%\openssl_1_1_1\out32.dbg\libcrypto.lib Ws2_32.lib Gdi32.lib Advapi32.lib Crypt32.lib User32.lib" -mp -nomake examples -nomake tests -platform win32-msvc
+call configure -prefix "%LibrariesPath%\Qt-5.12.8" -debug-and-release -force-debug-info -opensource -confirm-license -static -static-runtime -I "%LibrariesPath%\openssl_1_1_1\include" -no-opengl -openssl-linked OPENSSL_LIBS_DEBUG="%LibrariesPath%\openssl_1_1_1\out32.dbg\libssl.lib %LibrariesPath%\openssl_1_1_1\out32.dbg\libcrypto.lib Ws2_32.lib Gdi32.lib Advapi32.lib Crypt32.lib User32.lib" OPENSSL_LIBS_RELEASE="%LibrariesPath%\openssl_1_1_1\out32\libssl.lib %LibrariesPath%\openssl_1_1_1\out32\libcrypto.lib Ws2_32.lib Gdi32.lib Advapi32.lib Crypt32.lib User32.lib" -mp -nomake examples -nomake tests -platform win32-msvc
 
 call jom -j4
 
