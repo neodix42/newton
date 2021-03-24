@@ -73,26 +73,26 @@ move ossl_static.pdb out32.dbg\ossl_static
 nmake clean
 move out32.dbg\ossl_static out32.dbg\ossl_static.pdb
 
-perl Configure no-shared VC-WIN32
-nmake
-mkdir out32
-move libcrypto.lib out32
-move libssl.lib out32
-move ossl_static.pdb out32
+rem perl Configure no-shared VC-WIN32
+rem nmake
+rem mkdir out32
+rem move libcrypto.lib out32
+rem move libssl.lib out32
+rem move ossl_static.pdb out32
 cd ..
 
 
 git clone https://github.com/desktop-app/zlib.git
 cd zlib\contrib\vstudio\vc14
 msbuild zlibstat.vcxproj /property:Configuration=Debug /p:PlatformToolset=v142 /p:platform=x86 /p:WindowsTargetPlatformVersion=10.0.19041.0
-msbuild zlibstat.vcxproj /property:Configuration=ReleaseWithoutAsm /p:PlatformToolset=v142 /p:platform=x86 /p:WindowsTargetPlatformVersion=10.0.19041.0
+rem msbuild zlibstat.vcxproj /property:Configuration=ReleaseWithoutAsm /p:PlatformToolset=v142 /p:platform=x86 /p:WindowsTargetPlatformVersion=10.0.19041.0
 cd ..\..\..\..
 
 
 git clone https://github.com/desktop-app/lzma.git
 cd lzma\C\Util\LzmaLib
 msbuild LzmaLib.sln /property:Configuration=Debug /p:PlatformToolset=v142 /p:platform=x86 /p:WindowsTargetPlatformVersion=10.0.19041.0
-msbuild LzmaLib.sln /property:Configuration=Release /p:PlatformToolset=v142 /p:platform=x86 /p:WindowsTargetPlatformVersion=10.0.19041.0
+rem msbuild LzmaLib.sln /property:Configuration=Release /p:PlatformToolset=v142 /p:platform=x86 /p:WindowsTargetPlatformVersion=10.0.19041.0
 cd ..\..\..\..
 
 
@@ -110,7 +110,7 @@ ninja -C out/Release common crash_generation_client exception_handler
 cd tools\windows\dump_syms
 call gyp dump_syms.gyp
 msbuild dump_syms.vcxproj /property:Configuration=Debug /p:PlatformToolset=v142 /p:platform=x86 /p:WindowsTargetPlatformVersion=10.0.19041.0
-msbuild dump_syms.vcxproj /property:Configuration=Release /p:PlatformToolset=v142 /p:platform=x86 /p:WindowsTargetPlatformVersion=10.0.19041.0
+rem msbuild dump_syms.vcxproj /property:Configuration=Release /p:PlatformToolset=v142 /p:platform=x86 /p:WindowsTargetPlatformVersion=10.0.19041.0
 cd ..\..\..\..\..
 
 
@@ -138,11 +138,12 @@ mkdir build-debug
 cd build-debug
 cmake -A Win32 -DTON_USE_ROCKSDB=OFF -DTON_USE_ABSEIL=OFF -DTON_ARCH= -DTON_ONLY_TONLIB=ON -DOPENSSL_FOUND=1 -DOPENSSL_INCLUDE_DIR=%LibrariesPath%\openssl_1_1_1\include -DOPENSSL_CRYPTO_LIBRARY=%LibrariesPath%\openssl_1_1_1\out32.dbg\libcrypto.lib -DZLIB_FOUND=1 -DZLIB_INCLUDE_DIR=%LibrariesPath%\zlib -DZLIB_LIBRARY=%LibrariesPath%\zlib\contrib\vstudio\vc14\x86\ZlibStatDebug\zlibstat.lib -DCMAKE_CXX_FLAGS_DEBUG="/DZLIB_WINAPI /DNDEBUG /MTd /Zi /Od /Ob0" -DCMAKE_C_FLAGS_DEBUG="/DNDEBUG /MTd /Zi /Od /Ob0" -DCMAKE_EXE_LINKER_FLAGS="/SAFESEH:NO Ws2_32.lib Gdi32.lib Advapi32.lib Crypt32.lib User32.lib" ..
 cmake --build . --target tonlib --config Debug
-cd ..
-mkdir build
-cd build
-cmake -A Win32 -DTON_USE_ROCKSDB=OFF -DTON_USE_ABSEIL=OFF -DTON_ARCH= -DTON_ONLY_TONLIB=ON -DOPENSSL_FOUND=1 -DOPENSSL_INCLUDE_DIR=%LibrariesPath%\openssl_1_1_1\include -DOPENSSL_CRYPTO_LIBRARY=%LibrariesPath%\openssl_1_1_1\out32\libcrypto.lib -DZLIB_FOUND=1 -DZLIB_INCLUDE_DIR=%LibrariesPath%\zlib -DZLIB_LIBRARY=%LibrariesPath%\zlib\contrib\vstudio\vc14\x86\ZlibStatReleaseWithoutAsm\zlibstat.lib -DCMAKE_CXX_FLAGS_RELEASE="/DZLIB_WINAPI /MT /Ob2" -DCMAKE_C_FLAGS_RELEASE="/MT /Ob2" -DCMAKE_EXE_LINKER_FLAGS="/SAFESEH:NO Ws2_32.lib Gdi32.lib Advapi32.lib Crypt32.lib User32.lib" ..
-cmake --build . --target tonlib --config Release
+
+rem cd ..
+rem mkdir build
+rem cd build
+rem cmake -A Win32 -DTON_USE_ROCKSDB=OFF -DTON_USE_ABSEIL=OFF -DTON_ARCH= -DTON_ONLY_TONLIB=ON -DOPENSSL_FOUND=1 -DOPENSSL_INCLUDE_DIR=%LibrariesPath%\openssl_1_1_1\include -DOPENSSL_CRYPTO_LIBRARY=%LibrariesPath%\openssl_1_1_1\out32\libcrypto.lib -DZLIB_FOUND=1 -DZLIB_INCLUDE_DIR=%LibrariesPath%\zlib -DZLIB_LIBRARY=%LibrariesPath%\zlib\contrib\vstudio\vc14\x86\ZlibStatReleaseWithoutAsm\zlibstat.lib -DCMAKE_CXX_FLAGS_RELEASE="/DZLIB_WINAPI /MT /Ob2" -DCMAKE_C_FLAGS_RELEASE="/MT /Ob2" -DCMAKE_EXE_LINKER_FLAGS="/SAFESEH:NO Ws2_32.lib Gdi32.lib Advapi32.lib Crypt32.lib User32.lib" ..
+rem cmake --build . --target tonlib --config Release
 
 cd %LibrariesPath%\..
 git clone --recursive https://github.com/newton-blockchain/wallet-desktop.git
@@ -163,6 +164,9 @@ git apply variant.patch
 cd ..\..
 
 cd ..\out
+
+rm -rf %LibrariesPath%\qt_5_12_8
+
 msbuild Wallet.sln /property:Configuration=Debug /p:platform=win32 /p:PlatformToolset=v142 /p:WindowsTargetPlatformVersion=10.0.19041.0 /p:Zc=preprocessor
 
 dir Debug
